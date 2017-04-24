@@ -1,0 +1,84 @@
+<md-sidenav
+    class="md-sidenav-left height-fix"
+    md-component-id="left"
+    md-is-locked-open="$mdMedia('gt-md')"
+    md-whiteframe="4"
+    md-is-open="vm.isOpen">
+
+    <md-toolbar class="md-theme-indigo">
+        <h1 class="md-toolbar-tools">Menu</h1>
+    </md-toolbar>
+
+    <md-content ng-controller="SidenavController as vm">
+		<md-list>
+			<md-item>
+				<md-content>
+					<a href="/">
+						<md-item-content md-ink-ripple layout="row" layout-align="start center">
+							<div class="inset">
+								<ng-md-icon icon="home"></ng-md-icon>
+							</div>
+							<div class="inset">Início</div>
+						</md-item-content>
+					</a>
+				</md-content>
+			</md-item>
+
+			<md-item>
+				<md-content>
+					<a href="#">
+						<md-item-content md-ink-ripple layout="row" layout-align="start center">
+							<div class="inset">
+								<ng-md-icon icon="assignment_ind"></ng-md-icon>
+							</div>
+							<div class="inset">Perfil</div>
+						</md-item-content>
+					</a>
+				</md-content>
+			</md-item>
+
+			<md-item>
+				<md-content>
+					<a href="#">
+						<md-item-content md-ink-ripple layout="row" layout-align="start center">
+							<div class="inset">
+								<ng-md-icon icon="history"></ng-md-icon>
+							</div>
+							<div class="inset">Histórico</div>
+						</md-item-content>
+					</a>
+				</md-content>
+			</md-item>
+
+			<md-divider></md-divider>
+			<md-subheader>Cadastros</md-subheader>
+
+			<md-item>
+				<md-content>
+					<a href="/food">
+						<md-item-content md-ink-ripple layout="row" layout-align="start center">
+							<div class="inset">
+								<ng-md-icon icon="restaurant"></ng-md-icon>
+							</div>
+							<div class="inset">Alimento</div>
+						</md-item-content>
+					</a>
+				</md-content>
+			</md-item>
+
+			<md-item>
+				<md-content>
+					<a href="/substance">
+						<md-item-content md-ink-ripple layout="row" layout-align="start center">
+							<div class="inset">
+								<ng-md-icon icon="grain"></ng-md-icon>
+							</div>
+							<div class="inset">Substância</div>
+						</md-item-content>
+					</a>
+				</md-content>
+			</md-item>
+
+		</md-list>
+	</md-content>
+</md-sidenav>

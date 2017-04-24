@@ -1,0 +1,20 @@
+<div md-whiteframe="1" layout="row">
+    <md-autocomplete
+        md-selected-item="selectedItem"
+        md-search-text="searchText"
+        md-selected-item-change="selectedItemChange(item)"
+        md-items="item in querySearch(searchText)"
+        md-item-text="item.name"
+        md-min-length="0"
+        placeholder="{{placeholder}}"
+        md-menu-class="autocomplete-custom-template"
+        class="no-shadows"
+        flex>
+        <md-item-template>
+            <span>{{item.name}}</span>
+        </md-item-template>
+    </md-autocomplete>
+    <ng-md-icon icon="playlist_add" size="30" class="autocomplete-icon md-ink-ripple primary-fill primary-fill-hover" ng-click="add(selectedItem)">
+        <md-tooltip>Adicionar</md-tooltip>
+    </ng-md-icon>
+</div>

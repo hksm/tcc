@@ -1,0 +1,7 @@
+{
+	"node": true,
+	"globals": {
+		"app": true,
+		"angular": true
+	}
+}

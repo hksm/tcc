@@ -1,0 +1,220 @@
+<md-tabs md-dynamic-height md-border-bottom md-center-tabs md-swipe-content md-stretch-tabs="always" md-selected="vm.selectedTab">
+    <md-tab label="Cadastro">
+        <md-content layout-padding>
+            <md-card>
+                <form name="foodForm">
+                    <md-card-title>
+                        <md-card-title-text>
+                            <span class="md-headline">Cadastro de alimentos</span>
+                        </md-card-title-text>
+                    </md-card-title>
+                    
+                    <md-card-content>
+
+                        <div layout="row" layout-padding>
+                            <img ng-src="http://placehold.it/150x150" alt="Imagem do alimento" flex="30">
+
+                            <div flex>
+                                <div layout-gt-sm="row">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Nome principal</label>
+                                        <input ng-model="vm.food.name" ng-required="true">
+                                    </md-input-container>
+                                </div>
+
+                                <div layout-gt-sm="row" class="chip-inside-input-container">
+                                    <md-input-container class="md-block" md-no-float flex-gt-sm>
+                                        <label>Outros nomes</label>
+                                        <md-chips ng-model="vm.food.otherNames" md-removable="true" md-max-chips="10">
+                                            <md-chip-template>
+                                                <strong>{{$chip}}</strong>
+                                            </md-chip-template>
+                                        </md-chips>
+                                    </md-input-container>
+                                </div>
+
+                            </div>
+                        
+                        </div>
+
+                        <h2 class="md-title">Classificação</h2>
+
+                        <div layout-gt-sm="row">
+                            <md-input-container class="md-block">
+                                <md-switch class="md-primary no-margin" name="special" ng-model="vm.food.isAlergenic">
+                                    Alergênico
+                                </md-switch>
+                            </md-input-container>
+                                
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Categoria</label>
+                                <md-select ng-model="vm.food.category" ng-required="true">
+                                    <md-option ng-repeat="category in vm.categories" ng-value="category.level">
+                                        {{category.name}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>
+
+                        <div layout-gt-sm="row" class="chip-inside-input-container">
+                            <md-input-container class="md-block" md-no-float flex-gt-sm>
+                                <label>Tags</label>
+                                <md-chips ng-model="vm.food.tags" md-autocomplete-snap md-transform-chip="vm.transformChip($chip)">
+                                    <md-autocomplete
+                                        md-selected-item="vm.selectedTextTag"
+                                        md-search-text="vm.searchTextTag"
+                                        md-items="item in vm.tags"
+                                        md-item-text="item.description"
+                                        placeholder="Search for a tag">
+                                        <span md-highlight-text="vm.searchTextTag">{{item.description}}</span>
+                                    </md-autocomplete>
+                                    <md-chip-template>
+                                        <span><strong>{{$chip.description}}</strong></span>
+                                    </md-chip-template>
+                                </md-chips>
+                            </md-input-container>
+                        </div>
+                        
+                        <h2 class="md-title">Valor nutricional</h2>
+
+                        <div layout-gt-sm="row">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Valor calórico</label>
+                                <input ng-model="vm.food.calories" numbers-only integer="10" decimal="2" append-unit="Kcal" append-location="after">
+                            </md-input-container>
+
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Carboidratos</label>
+                                <input ng-model="vm.food.carbs" numbers-only integer="10" decimal="2" append-unit="g" append-location="after">
+                            </md-input-container>
+
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Proteínas</label>
+                                <input ng-model="vm.food.proteins" numbers-only integer="10" decimal="2" append-unit="g" append-location="after">
+                            </md-input-container>
+
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Lipídios</label>
+                                <input ng-model="vm.food.lipids" numbers-only integer="10" decimal="2" append-unit="g" append-location="after">
+                            </md-input-container>
+                        </div>
+
+                        <h2 class="md-title">Alimentos relacionados</h2>
+
+                        <autocomplete-with-button query-search="vm.queryFood" list="vm.food.relatedFood" placeholder="Pesquisar um alimento"></autocomplete-with-button>
+                        
+                        <listbox-options list="vm.food.relatedFood" primary-property="name" secondary-property="category"></listbox-options>
+
+                        <h2 class="md-title">Substâncias contidas</h2>
+
+                        <autocomplete-with-button query-search="vm.allSubstances" list="vm.food.containedSubstances" placeholder="Pesquisar uma substância"></autocomplete-with-button>
+                        
+                        <listbox-options list="vm.food.containedSubstances" primary-property="name" secondary-property="category"></listbox-options>
+
+                    </md-card-content>
+                    
+                    <md-card-actions layout="row" layout-align="end center">
+                        <md-button class="md-raised md-primary" ng-click="vm.save(vm.food)" ng-disabled="foodForm.$invalid">Salvar</md-button>
+                        <md-button class="md-raised" ng-click="vm.cleanForm()">Limpar</md-button>
+                    </md-card-actions>
+                </form>
+            </md-card>
+        </md-content>
+    </md-tab>
+    <md-tab label="Listagem">
+        <md-content layout-padding>
+            <md-card>
+                <md-card-title>
+                    <md-card-title-text>
+                        <span class="md-headline">Listagem de alimentos</span>
+                    </md-card-title-text>
+                </md-card-title>
+                
+                <md-card-content class="no-padding">
+                    <md-list flex>
+                        <md-list-item class="md-3-line" ng-click="null">
+                            <img ng-src="http://placehold.it/40x40" class="md-avatar" alt="Imagem do alimento">
+                            <div class="md-list-item-text" layout="column">
+                                <h3>Nome do alimento / Categoria</h3>
+                                <h4>Outros nomes, como este, como aquele, aquele outro</h4>
+                                <p>15 Kcal, P: 20g, C: 30g, L: 10g</p>
+                            </div>
+                            <ng-md-icon icon="expand_more" class="md-secondary" ng-click="null"></ng-md-icon>
+                            <ng-md-icon icon="mode_edit" class="md-secondary" ng-click="null"></ng-md-icon>
+                            <ng-md-icon icon="delete" class="md-secondary" ng-click="null"></ng-md-icon>
+                        </md-list-item>
+                        <md-subheader class="md-no-sticky no-padding" flex-offset="10">Substâncias</md-subheader>
+                        <md-list-item>
+                            <span flex-offset="10">Teste</span>
+                        </md-list-item>
+
+                        <div ng-repeat="item in vm.foodPage">
+                            <md-list-item class="md-3-line" ng-click="vm.expand(item)">
+                                <img ng-src="http://placehold.it/40x40" class="md-avatar" alt="Imagem do alimento">
+                                <div class="md-list-item-text" layout="column">
+                                    <h3><strong>{{item.name}}</strong> {{item.category ? ' / ' + item.category : ''}}</h3>
+                                    <h4>{{item.otherNames.join(', ')}}</h4>
+                                    <p>{{vm.parseCaloricValue(item)}}</p>
+                                </div>
+                                <ng-md-icon icon="mode_edit" class="md-secondary" ng-click="vm.edit(item)"></ng-md-icon>
+                                <ng-md-icon icon="delete" class="md-secondary" ng-click="vm.remove(item)"></ng-md-icon>
+                            </md-list-item>
+                            <div ng-show="item.expanded">
+                                <md-subheader class="md-no-sticky no-padding" flex-offset="10" ng-show="item.relatedFood.length > 0">Alimentos Relacionados</md-subheader>
+                                <md-list-item ng-repeat="subitem in item.relatedFood">
+                                    <span flex-offset="10">{{subitem.name}}</span>
+                                </md-list-item>
+                                <md-subheader class="md-no-sticky no-padding" flex-offset="10" ng-show="item.containedSubstances.length > 0">Substâncias Contidas</md-subheader>
+                                <md-list-item ng-repeat="subitem in item.containedSubstances">
+                                    <span flex-offset="10">{{subitem.name}}</span>
+                                </md-list-item>
+                            </div>
+                        </div>
+                        
+                    </md-list>
+                </md-card-content>
+            </md-card>
+
+            <md-card>
+                <md-toolbar class="md-table-toolbar md-default">
+                    <div class="md-toolbar-tools">
+                        <span>Nutrition</span>
+                    </div>
+                </md-toolbar>
+                <md-table-container>
+                    <table md-table md-row-select multiple ng-model="vm.selected" md-progress="vm.loadingPromise">
+                        <thead md-head md-order="vm.query.order" md-on-reorder="vm.loadPage">
+                            <tr md-row>
+                                <th md-column md-order-by="nameToLower"><span>Dessert (100g serving)</span></th>
+                                <th md-column md-numeric>Sodium (mg)</th>
+                                <th md-column md-numeric>Calcium (%)</th>
+                                <th md-column md-numeric>Iron (%)</th>
+                                <th md-column md-numeric>Iron (%)</th>
+                                <th md-column md-numeric md-order-by="calories.value"><span>Calories</span></th>
+                                <th md-column md-numeric>Carbs (g)</th>
+                                <th md-column md-numeric>Proteínas (g)</th>
+                                <th md-column md-numeric>Lipídios (g)</th>
+                            </tr>
+                        </thead>
+                        <tbody md-body>
+                            <tr md-row md-select="food" md-select-id="id" md-auto-select ng-repeat="food in vm.foodPage">
+                                <td md-cell>{{food.name}}</td>
+                                <td md-cell>{{food.otherNames.join(', ')}}</td>
+                                <td md-cell>{{food.isAlergenic}}</td>
+                                <td md-cell>{{food.category}}</td>
+                                <td md-cell>{{food.tags.join(', ')}}</td>
+                                <td md-cell>{{food.calories}}</td>
+                                <td md-cell>{{food.carbs}}</td>
+                                <td md-cell>{{food.proteins}}</td>
+                                <td md-cell>{{food.lipids}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </md-table-container>
+
+                <md-table-pagination md-limit="vm.query.size" md-limit-options="[10, 20, 30]" md-page="vm.query.page" md-total="{{vm.foodPage.size}}" md-on-paginate="vm.loadPage" md-page-select></md-table-pagination>
+            </md-card>
+
+        </md-content>
+    </md-tab>
+</md-tabs>

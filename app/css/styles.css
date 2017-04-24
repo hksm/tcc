@@ -1,0 +1,127 @@
+.no-padding {
+    padding: 0 !important;
+}
+
+.md-subheader.no-padding .md-subheader-inner {
+    padding: 2px 0 0 0 !important;
+}
+
+md-input-container md-switch {
+    margin: 0 10px !important;
+}
+
+.primary-fill {
+    fill: rgb(63,81,181);
+}
+
+.primary-fill-hover:hover {
+    fill: rgb(57,73,171);
+}
+
+.height-fix {
+    height: 100%;
+}
+
+md-toolbar .md-icon-button {
+    fill: white;
+}
+
+
+md-content {
+    background-color: #eee;
+}
+
+md-card {
+    background-color: #fff;
+}
+
+md-card h2:first-of-type {
+    margin-top: 0;
+}
+
+h2 {
+    font-weight: 400;
+}
+
+md-sidenav {
+    fill: #737373;
+}
+
+md-sidenav ng-md-icon {
+    position: relative;
+    top: 2px;
+}
+
+.md-sidenav-left a {
+    text-decoration: none;
+    color: gray;
+}
+
+.md-subheader-inner {
+    background-color: white;
+}
+
+md-card { 
+    max-width: 800px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.md-chip-input-container .md-errors-spacer {
+    display: none;
+}
+
+.chip-inside-input-container {
+    margin-bottom: 24px;
+}
+
+.listbox-container {
+    padding-top: 12px;
+}
+
+.listbox-container h3 {
+    font-size: 17px;
+}
+
+.listbox-option {
+    padding: 0 6px !important;
+}
+
+.listbox-option .md-item-text {
+    padding: 8px;
+    background: #f0f0f0;
+    border-radius: 3px;
+}
+
+.listbox-option .md-item-text h3,
+.listbox-option .md-item-text p {
+    padding: 0;
+    margin: 0;
+}
+
+.listbox-option .close-icon {
+    float: right;
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    fill: gray;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.listbox-option .close-icon:hover {
+    fill: red;
+}
+
+.autocomplete-icon {
+    padding: 6px 5px 0 5px;
+    cursor: pointer;
+}
+
+.no-shadows .md-whiteframe-z1 {
+    box-shadow: none !important;
+}
+
+.green-toaster {
+    background-color: green;
+}
