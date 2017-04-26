@@ -9,7 +9,6 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "gulp-webserver": "^0.9.1",
     "http-server": "^0.9.0",
     "livereload": "^0.6.2"
   },
@@ -24,8 +23,9 @@
     "angular-messages": "^1.5.9",
     "angular-route": "^1.5.9",
     "angular-sanitize": "^1.5.9",
-    "gulp-serve": "^1.4.0",
-    "gulp-server-livereload": "^1.9.2",
+    "gulp": "^3.9.1",
+    "gulp-jshint": "^2.0.4",
+    "gulp-webserver": "^0.9.1",
     "roboto-fontface": "^0.7.0"
   }
 }
