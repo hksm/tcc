@@ -5,7 +5,6 @@ import com.google.common.collect.ImmutableMap;
 import com.querydsl.core.annotations.QueryEntity;
 import com.querydsl.core.types.Path;
 import io.github.hksm.constant.Category;
-import io.github.hksm.util.Maps;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -31,7 +30,6 @@ public class Food {
     @CollectionTable(name = "FoodOtherNames")
     private Set<String> otherNames;
 
-    @NotNull
     private boolean isAlergenic;
 
     private Category category;

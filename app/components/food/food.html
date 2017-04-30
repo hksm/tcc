@@ -107,7 +107,7 @@
 
                         <h2 class="md-title">Substâncias contidas</h2>
 
-                        <autocomplete-with-button query-search="vm.allSubstances" list="vm.food.containedSubstances" placeholder="Pesquisar uma substância"></autocomplete-with-button>
+                        <autocomplete-with-button query-search="vm.querySubstance" list="vm.food.containedSubstances" placeholder="Pesquisar uma substância"></autocomplete-with-button>
                         
                         <listbox-options list="vm.food.containedSubstances" primary-property="name" secondary-property="category"></listbox-options>
 
@@ -123,7 +123,7 @@
     </md-tab>
     <md-tab label="Listagem">
         <md-content layout-padding>
-            <md-card>
+            <!-- <md-card>
                 <md-card-title>
                     <md-card-title-text>
                         <span class="md-headline">Listagem de alimentos</span>
@@ -173,7 +173,7 @@
                         
                     </md-list>
                 </md-card-content>
-            </md-card>
+            </md-card> -->
 
             <md-card>
                 <md-toolbar class="md-table-toolbar md-default">

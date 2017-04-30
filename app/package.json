@@ -1,8 +1,9 @@
 {
   "name": "tcc",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "",
   "main": "components/app.js",
+  "repository": "https://github.com/hksm/tcc",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -26,6 +27,7 @@
     "gulp": "^3.9.1",
     "gulp-jshint": "^2.0.4",
     "gulp-webserver": "^0.9.1",
+    "jshint": "^2.9.4",
     "roboto-fontface": "^0.7.0"
   }
 }

@@ -21,19 +21,15 @@
                             </md-input-container>
 
                             <md-input-container class="md-block">
-                                <md-switch class="md-primary no-margin" name="special" ng-model="vm.food.alergenic">
+                                <md-switch class="md-primary no-margin" name="special" ng-model="vm.substance.alergenic">
                                     Alergênica
                                 </md-switch>
                             </md-input-container>
                         </div>
 
-                        <div layout-gt-sm="row">
-                            
-                        </div>
-
                         <h2 class="md-title">Alimentos em que está contida</h2>
 
-                        <autocomplete-with-button query-search="vm.allFood" list="vm.substance.containedInFood" placeholder="Pesquisar um alimento"></autocomplete-with-button>
+                        <autocomplete-with-button query-search="vm.queryFood" list="vm.substance.containedInFood" placeholder="Pesquisar um alimento"></autocomplete-with-button>
                         
                         <listbox-options list="vm.substance.containedInFood" primary-property="name" secondary-property="category"></listbox-options>
 
@@ -45,7 +41,6 @@
                     </md-card-actions>
                 </form>
             </md-card>
-            <pre>{{vm.food|json}}</pre>
         </md-content>
     </md-tab>
     <md-tab label="Listagem">

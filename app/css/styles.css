@@ -62,7 +62,7 @@ md-sidenav ng-md-icon {
 }
 
 md-card { 
-    max-width: 800px;
+    max-width: 90%;
     margin-right: auto;
     margin-left: auto;
 }

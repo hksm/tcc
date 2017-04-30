@@ -4,9 +4,9 @@
 
 	angular.module('tcc').controller('FoodController', Controller);
 
-	Controller.$inject = ['FoodService', 'EnumsService', '$mdDialog', '$mdToast'];
+	Controller.$inject = ['FoodService', 'SubstanceService', 'EnumsService', '$mdDialog', '$mdToast'];
 
-	function Controller(FoodService, EnumsService, $mdDialog, $mdToast) {
+	function Controller(FoodService, SubstanceService, EnumsService, $mdDialog, $mdToast) {
 		var vm = this;
 		
 		vm.transformTag = transformTag;
@@ -16,6 +16,7 @@
 		vm.edit = edit;
 		vm.remove = remove;
 		vm.queryFood = queryFood;
+		vm.querySubstance = querySubstance;
 		vm.cleanForm = cleanForm;
 
 		vm.categories = [];
@@ -136,6 +137,13 @@
 		function queryFood(string) {
 			var query = 'name==*' + string + '*';
 			return FoodService.getPage(query).then(function(response) {
+				return response.data.content;
+			});
+		}
+
+		function querySubstance(string) {
+			var query = 'substance.name==*' + string + '*';
+			return SubstanceService.getPage(query).then(function(response) {
 				return response.data.content;
 			});
 		}

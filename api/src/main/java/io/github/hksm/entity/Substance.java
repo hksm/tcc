@@ -1,9 +1,12 @@
 package io.github.hksm.entity;
 
+import com.google.common.collect.ImmutableMap;
 import com.querydsl.core.annotations.QueryEntity;
+import com.querydsl.core.types.Path;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -25,13 +28,16 @@ public class Substance {
     @ManyToMany(fetch = FetchType.LAZY)
     private Set<Food> containedInFood;
 
+    private boolean isAlergenic;
+
     public Substance() {
     }
 
-    public Substance(Long id, Set<String> names, Set<Food> containedInFood) {
+    public Substance(Long id, Set<String> names, Set<Food> containedInFood, boolean isAlergenic) {
         this.id = id;
         this.names = names;
         this.containedInFood = containedInFood;
+        this.isAlergenic = isAlergenic;
     }
 
     public Long getId() {
@@ -58,6 +64,14 @@ public class Substance {
         this.containedInFood = containedInFood;
     }
 
+    public boolean isAlergenic() {
+        return isAlergenic;
+    }
+
+    public void setAlergenic(boolean alergenic) {
+        isAlergenic = alergenic;
+    }
+
     public static Substance.Builder builder() {
         return new Substance.Builder();
     }
@@ -66,12 +80,13 @@ public class Substance {
         private Long id;
         private Set<String> names;
         private Set<Food> containedOnFood;
+        private boolean isAlergenic;
 
         private Builder() {
         }
 
         private Substance build() {
-            return new Substance(id, names, containedOnFood);
+            return new Substance(id, names, containedOnFood, isAlergenic);
         }
 
         public Builder id(Long id) {
@@ -88,5 +103,19 @@ public class Substance {
             this.containedOnFood = containedOnFood;
             return this;
         }
+
+        public Builder isAlergenic(boolean isAlergenic) {
+            this.isAlergenic = isAlergenic;
+            return this;
+        }
+    }
+
+    public static Map<String, Path> getExpressions() {
+        return ImmutableMap.<String, Path>builder()
+                .put("names", QSubstance.substance.names.any())
+                .put("containedInFood.name", QSubstance.substance.containedInFood.any().name)
+                .put("alergenic", QSubstance.substance)
+                .build();
+
     }
 }
