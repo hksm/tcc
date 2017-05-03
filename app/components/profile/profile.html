@@ -1,0 +1,38 @@
+<md-content layout-padding>
+    <md-card>
+        <form name="profileForm">
+            <md-card-title>
+                <md-card-title-text>
+                    <span class="md-headline">Definição de perfil</span>
+                </md-card-title-text>
+            </md-card-title>
+            
+            <md-card-content>
+                <div layout-gt-sm="row">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Nome completo</label>
+                        <input id="nameInput" ng-model="vm.profile.fullName" ng-required="true">
+                    </md-input-container>
+                </div>
+
+                <h2 class="md-title">Alergias alimentares</h2>
+
+                <autocomplete-with-button query-search="vm.queryFood" list="vm.profile.food" placeholder="Pesquisar um alimento"></autocomplete-with-button>
+                
+                <listbox-options list="vm.profile.food" categories="vm.categories"></listbox-options>
+
+                <h2 class="md-title">Alergias a substâncias</h2>
+
+                <autocomplete-with-button query-search="vm.querySubstance" list="vm.profile.substance" placeholder="Pesquisar uma substância"></autocomplete-with-button>
+                
+                <listbox-options list="vm.profile.substance"></listbox-options>
+
+            </md-card-content>
+            
+            <md-card-actions layout="row" layout-align="end center">
+                <md-button class="md-raised md-primary" ng-click="vm.save(vm.profile)" ng-disabled="profileForm.$invalid">Salvar</md-button>
+                <md-button class="md-raised" ng-click="vm.cleanForm(profileForm)">Limpar</md-button>
+            </md-card-actions>
+        </form>
+    </md-card>
+</md-content>

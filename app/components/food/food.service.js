@@ -24,16 +24,19 @@
             return $http.delete(BASE_URL + '/food/' + id);
         }
 
-        function getPage(filter, page, size) {
+        function getPage(query) {
             var arr = [];
-            if (filter) {
-                arr.push('filter=' + filter);
+            if (query && query.filter) {
+                arr.push('filter=' + query.filter);
             }
-            if (page) {
-                arr.push('page=' + page);
+            if (query && query.page) {
+                arr.push('page=' + query.page);
             }
-            if (size) {
-                arr.push('size=' + size);
+            if (query && query.size) {
+                arr.push('size=' + query.size);
+            }
+            if (query && query.sort) {
+                arr.push('sort=' + query.sort);
             }
             var params = arr.length > 0 ? ('?' + arr.join('&')) : '';
         	return $http.get(BASE_URL + '/food' + params);

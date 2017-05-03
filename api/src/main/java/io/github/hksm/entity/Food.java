@@ -47,11 +47,21 @@ public class Food {
     private BigDecimal lipids;
 
     @JsonIgnoreProperties(value = {"relatedFood", "containedSubstances", "tags"}, allowSetters = true)
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST })
+    @JoinTable(name = "food_related_food",
+            joinColumns = @JoinColumn(name = "main_food_id"),
+            inverseJoinColumns = @JoinColumn(name = "related_food_id"),
+            foreignKey = @ForeignKey(name = "fk_food_related_food_main"),
+            inverseForeignKey = @ForeignKey(name = "fk_food_related_food_related"))
     private Set<Food> relatedFood;
 
     @JsonIgnoreProperties(value = {"containedInFood"}, allowSetters = true)
     @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "food_contained_substances",
+            joinColumns = @JoinColumn(name = "food_id"),
+            inverseJoinColumns = @JoinColumn(name = "substance_id"),
+            foreignKey = @ForeignKey(name = "fk_food_contained_substances_food"),
+            inverseForeignKey = @ForeignKey(name = "fk_food_contained_substances_substance"))
     private Set<Substance> containedSubstances;
 
     public Food() {
@@ -269,7 +279,7 @@ public class Food {
                 .put("proteins", QFood.food.carbs)
                 .put("lipids", QFood.food.lipids)
                 .put("relatedFood.name", QFood.food.relatedFood.any().name)
-                .put("containedSubstances.name", QFood.food.containedSubstances.any().names.any())
+                .put("containedSubstances.name", QFood.food.containedSubstances.any().name)
                 .build();
 
     }

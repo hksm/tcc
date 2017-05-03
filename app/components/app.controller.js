@@ -8,6 +8,8 @@
 
 	function Controller($scope, $mdSidenav, $timeout, $rootScope, $mdMedia) {
 		var vm = this;
+		vm.openSearch = openSearch;
+		vm.goBack = goBack;
 
 		$scope.toggleLeft = buildDelayedToggler('left');
 
@@ -36,9 +38,19 @@
 			}, 200);
 	    }
 
+	    function openSearch() {
+	    	vm.searching = true;
+	    }
+
+	    function goBack() {
+	    	vm.searching = false;
+	    }
+
 	    $rootScope.$on("$locationChangeStart", function(event, next) { 
 			var route = next.replace('http://localhost:8000/', '');
 			var routes = {
+				'profile': 'Perfil',
+				'history': 'Histórico',
 				'food': 'Alimentos',
 				'substance': 'Substâncias',
 				'default': 'Início'

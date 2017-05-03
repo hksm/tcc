@@ -20,6 +20,11 @@
 			// 	controller: 'SignupController',
 			// 	controllerAs: 'vm'
 			// })
+			.when('/profile', {
+				templateUrl: '/components/profile/profile.html',
+				controller: 'ProfileController',
+				controllerAs: 'vm'
+			})
 			.when('/food', {
 				templateUrl: '/components/food/food.html',
 				controller: 'FoodController',

@@ -10,14 +10,10 @@
                     </md-card-title>
                     
                     <md-card-content>
-                        <div layout-gt-sm="row" class="chip-inside-input-container" layout-align="center end">
+                        <div layout-gt-sm="row">
                             <md-input-container class="md-block" flex-gt-sm>
-                                <label>Nomes</label>
-                                <md-chips ng-model="vm.substance.names" md-removable="true" md-max-chips="10">
-                                    <md-chip-template>
-                                        <strong>{{$chip}}</strong>
-                                    </md-chip-template>
-                                </md-chips>
+                                <label>Nome</label>
+                                <input id="nameInput" ng-model="vm.substance.name" ng-required="true">
                             </md-input-container>
 
                             <md-input-container class="md-block">
@@ -31,64 +27,66 @@
 
                         <autocomplete-with-button query-search="vm.queryFood" list="vm.substance.containedInFood" placeholder="Pesquisar um alimento"></autocomplete-with-button>
                         
-                        <listbox-options list="vm.substance.containedInFood" primary-property="name" secondary-property="category"></listbox-options>
+                        <listbox-options list="vm.substance.containedInFood" categories="vm.categories"></listbox-options>
 
                     </md-card-content>
                     
                     <md-card-actions layout="row" layout-align="end center">
-                        <md-button class="md-raised md-primary" ng-click="vm.save(vm.substance)" ng-disabled="substanceForm.$invalid">Salvar</md-button>
-                        <md-button class="md-raised" ng-click="vm.cleanForm()">Limpar</md-button>
+                        <md-button class="md-raised md-primary" ng-click="vm.save(vm.substance, substanceForm)" ng-disabled="substanceForm.$invalid">Salvar</md-button>
+                        <md-button class="md-raised" ng-click="vm.cleanForm(substanceForm)">Limpar</md-button>
                     </md-card-actions>
                 </form>
             </md-card>
         </md-content>
     </md-tab>
     <md-tab label="Listagem">
-        <md-content layout-padding>
+        <md-content>
             <md-card>
-                <md-card-title>
-                    <md-card-title-text>
-                        <span class="md-headline">Listagem de substâncias</span>
-                    </md-card-title-text>
-                </md-card-title>
-                
-                <md-card-content class="no-padding">
-                    <md-list flex>
-                        <md-list-item class="md-3-line" ng-click="null">
-                            <img ng-src="http://placehold.it/40x40" class="md-avatar" alt="Imagem da substância">
-                            <div class="md-list-item-text" layout="column">
-                                <h3>Nome do alimento / Categoria</h3>
-                                <h4>Outros nomes, como este, como aquele, aquele outro</h4>
-                                <p>15 Kcal, P: 20g, C: 30g, L: 10g</p>
-                            </div>
-                            <ng-md-icon icon="expand_more" class="md-secondary" ng-click="null"></ng-md-icon>
-                            <ng-md-icon icon="mode_edit" class="md-secondary" ng-click="null"></ng-md-icon>
-                            <ng-md-icon icon="delete" class="md-secondary" ng-click="null"></ng-md-icon>
-                        </md-list-item>
-                        <md-subheader class="md-no-sticky no-padding" flex-offset="10">Substâncias</md-subheader>
-                        <md-list-item>
-                            <span flex-offset="10">Teste</span>
-                        </md-list-item>
+                <md-toolbar class="md-table-toolbar md-default" ng-hide="vm.selectedRows.length">
+                    <div class="md-toolbar-tools">
+                        <span>Substâncias</span>
+                        <div flex></div>
+                        <button class="md-button md-icon-button" ng-click="vm.loadPage()" md-ink-ripple aria-label="Atualizar">
+                            <ng-md-icon icon="refresh"></ng-md-icon>
+                        </button>
+                    </div>
+                </md-toolbar>
 
-                        <div ng-repeat="item in vm.substancePage">
-                            <md-list-item ng-click="vm.expand(item)">
-                                <img ng-src="http://placehold.it/40x40" class="md-avatar" alt="Imagem da substância">
-                                <div class="md-list-item-text" layout="column">
-                                    <h3>{{item.names.join(', ')}}</h3>
-                                </div>
-                                <ng-md-icon icon="mode_edit" class="md-secondary" ng-click="vm.edit(item)"></ng-md-icon>
-                                <ng-md-icon icon="delete" class="md-secondary" ng-click="vm.remove(item)"></ng-md-icon>
-                            </md-list-item>
-                            <div ng-show="item.expanded">
-                                <md-subheader class="md-no-sticky no-padding" flex-offset="10" ng-show="item.containedInFood.length > 0">Alimentos em que está contida</md-subheader>
-                                <md-list-item ng-repeat="subitem in item.containedInFood">
-                                    <span flex-offset="10">{{subitem.name}}</span>
-                                </md-list-item>
-                            </div>
-                        </div>
-                        
-                    </md-list>
-                </md-card-content>
+                <md-toolbar class="md-table-toolbar alternate" ng-show="vm.selectedRows.length">
+                    <div class="md-toolbar-tools">
+                        <div>{{vm.selectedRows.length}} {{vm.selectedRows.length === 1 ? 'item selecionado' : 'itens selecionados'}}</div>
+                        <div flex></div>
+                        <button class="md-button md-icon-button" ng-click="vm.edit(vm.selectedRows[0])" md-ink-ripple aria-label="Editar">
+                            <ng-md-icon icon="mode_edit"></ng-md-icon>
+                        </button>
+                        <button class="md-button md-icon-button" ng-click="vm.remove(vm.selectedRows)" md-ink-ripple aria-label="Remover">
+                            <ng-md-icon icon="delete"></ng-md-icon>
+                        </button>
+                    </div>
+                </md-toolbar>
+
+                <md-table-container>
+                    <table md-table md-row-select multiple ng-model="vm.selectedRows" md-progress="vm.loadingPromise">
+                        <thead md-head md-order="vm.query.sort" md-on-reorder="vm.loadPage">
+                            <tr md-row>
+                                <th md-column md-order-by="name"><span>Nome</span></th>
+                                <th md-column>Alergênico</th>
+                            </tr>
+                        </thead>
+                        <tbody md-body>
+                            <tr md-row md-select="substance" md-select-id="id" md-auto-select ng-repeat="substance in vm.substancePage.content">
+                                <td md-cell>{{substance.name}}</td>
+                                <td md-cell>
+                                    <ng-md-icon icon="priority_high" ng-if="substance.alergenic" class="warning-red"></ng-md-icon>
+                                    <ng-md-icon icon="remove" ng-if="!substance.alergenic" class="standard-gray"></ng-md-icon>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </md-table-container>
+
+                <md-table-pagination md-limit="vm.query.size" md-limit-options="[10, 20, 30]" md-page="vm.query.page" md-total="{{vm.substancePage.totalElements}}" md-on-paginate="vm.loadPage" md-page-select></md-table-pagination>
+            </md-card>
             </md-card>
         </md-content>
     </md-tab>

@@ -15,9 +15,6 @@ public enum Category {
 
     private int level;
 
-    /**
-     * Empty constructor for serialization. Do not use.
-     */
     Category() {
     }
 

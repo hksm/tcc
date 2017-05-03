@@ -1,0 +1,39 @@
+<div role="dialog" aria-label="Filtros" layout="column" layout-align="center center">
+	<md-toolbar>
+		<div class="md-toolbar-tools">
+			<h2>Filtros</h2>
+		</div>
+	</md-toolbar>
+
+	<div class="filters-dialog-content">
+		<md-radio-group ng-model="vm.filters.mode" layout="row" ng-change="vm.parseFilter()">
+			<md-radio-button value="and" flex="50"> Todos os filtros</md-radio-button>
+			<md-radio-button value="or" flex="50"> Algum dos filtros</md-radio-button>
+		</md-radio-group>
+
+
+		<div layout-gt-sm="row">
+            <md-input-container class="md-block" flex>
+                <label>Nome</label>
+                <input ng-model="vm.filters.name" ng-change="vm.parseFilter()">
+            </md-input-container>
+        </div>
+        <div layout-gt-sm="row">
+            <md-input-container class="md-block">
+                <md-switch class="md-primary no-margin" ng-model="vm.filters.isAlergenic" ng-change="vm.parseFilter()">
+                    Alergênico
+                </md-switch>
+            </md-input-container>
+        </div>
+        <md-list>
+			<md-subheader class="md-no-sticky">Categorias</md-subheader>
+			<md-list-item ng-repeat="category in vm.categories">
+				<p> {{ category.name }} </p>
+				<md-checkbox class="md-secondary" ng-model="category.filtered" ng-change="vm.parseFilter()"></md-checkbox>
+			</md-list-item>
+		</md-list>
+
+	<div layout="row" class="filters-dialog-button">
+		<md-button flex class="md-primary" ng-click="vm.close()">Close</md-button>
+	</div>
+</div>

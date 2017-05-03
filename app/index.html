@@ -21,13 +21,13 @@
             <ng-include src="'/components/sidenav/sidenav.html'"></ng-include>
 
             <md-content layout="column" flex>
-                <md-toolbar>
-                    <div class="md-toolbar-tools">
+                <md-toolbar ng-hide="vm.searching">
+                    <div class="md-toolbar-tools md-whiteframe-z2">
                         <md-button class="md-icon-button" aria-label="Menu" ng-click="vm.openSidenav()" ng-hide="vm.isLockedOpen()">
                             <ng-md-icon icon="menu"></ng-md-icon>
                         </md-button>
 
-                        <h2 flex md-truncate>{{vm.mainTitle}}</h2>
+                        <h2 md-truncate flex>{{vm.mainTitle}}</h2>
 
                         <md-button class="md-icon-button" aria-label="Notifications">
                             <ng-md-icon icon="notifications"></ng-md-icon>
@@ -38,11 +38,39 @@
                         </md-button>
                     </div>
                 </md-toolbar>
-                
+
+                <md-toolbar class="search-toolbar md-whiteframe-z2" ng-show="vm.searching">
+                    <div class="md-toolbar-tools">
+                        <md-button class="md-icon-button" aria-label="Menu" ng-click="vm.openSidenav()" ng-hide="vm.isLockedOpen()">
+                            <ng-md-icon icon="menu"></ng-md-icon>
+                        </md-button>
+
+                        <md-button class="md-icon-button" aria-label="Voltar" ng-click="vm.goBack()">
+                            <ng-md-icon icon="arrow_back"></ng-md-icon>
+                        </md-button>
+
+                        <md-input-container class="md-block" flex>
+                            <input id="nameInput" ng-model="vm.searchTerm">
+                        </md-input-container>
+
+                        <md-button class="md-icon-button" aria-label="Notifications">
+                            <ng-md-icon icon="notifications"></ng-md-icon>
+                        </md-button>
+
+                        <md-button class="md-icon-button" aria-label="User">
+                            <ng-md-icon icon="person"></ng-md-icon>
+                        </md-button>
+                    </div>
+                </md-toolbar>
+
                 <ng-view></ng-view>
             </md-content>
 
         </div>
+
+        <md-button class="md-fab md-primary md-fab-bottom-right" aria-label="Pesquisar" ng-click="vm.openSearch()" ng-hide="vm.searching">
+            <ng-md-icon icon="search"></md-icon>
+        </md-button>
 
     </div>
 
@@ -56,6 +84,7 @@
     <script src="/node_modules/angular-material/angular-material.js"></script>
     <script src="/node_modules/angular-material-icons/angular-material-icons.js"></script>
     <script src="/node_modules/angular-material-data-table/dist/md-data-table.js"></script>
+    <script src="/node_modules/meanie-angular-focus/release/meanie-angular-focus.js"></script>
 
     <script src="/components/app.js"></script>
     <script src="/components/app.constants.js"></script>
@@ -63,13 +92,18 @@
     <script src="/components/utils/numbers-only.directive.js"></script>
     <script src="/components/utils/listbox-options.directive.js"></script>
     <script src="/components/utils/autocomplete-with-button.directive.js"></script>
+    <script src="/components/utils/enum-description.filter.js"></script>
 
     <script src="/components/app.controller.js"></script>
     <script src="/components/utils/enums.service.js"></script>
     <script src="/components/sidenav/sidenav.controller.js"></script>
     <script src="/components/home/home.controller.js"></script>
+    <script src="/components/auth/auth.service.js"></script>
+    <script src="/components/profile/profile.service.js"></script>
+    <script src="/components/profile/profile.controller.js"></script>
     <script src="/components/food/food.service.js"></script>
     <script src="/components/food/food.controller.js"></script>
+    <script src="/components/food/food-filters.controller.js"></script>
     <script src="/components/substance/substance.service.js"></script>
     <script src="/components/substance/substance.controller.js"></script>
 </body>

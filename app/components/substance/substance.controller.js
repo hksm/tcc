@@ -4,9 +4,9 @@
 
 	angular.module('tcc').controller('SubstanceController', Controller);
 
-	Controller.$inject = ['EnumsService', '$mdDialog', '$mdToast', 'SubstanceService', 'FoodService'];
+	Controller.$inject = ['EnumsService', '$mdDialog', '$mdToast', 'SubstanceService', 'FoodService', '$focus'];
 
-	function Controller(EnumsService, $mdDialog, $mdToast, SubstanceService, FoodService) {
+	function Controller(EnumsService, $mdDialog, $mdToast, SubstanceService, FoodService, $focus) {
 		var vm = this;
 
 		vm.transformTag = transformTag;
@@ -14,7 +14,17 @@
 		vm.save = save;
 		vm.edit = edit;
 		vm.remove = remove;
+		vm.cleanForm = cleanForm;
 		vm.queryFood = queryFood;
+		vm.loadPage = loadPage;
+
+		vm.selectedRows = [];
+
+		vm.query = {
+			sort: 'name',
+			size: 10,
+			page: 1
+		};
 
 		(function init() {
 			loadEnums();
@@ -28,11 +38,14 @@
 			});
 		}
 
-		function cleanForm() {
+		function cleanForm(form) {
 			vm.substance = {
-			names: [],
-			containedInFood: []
-		};
+				name: undefined,
+				containedInFood: []
+			};
+			if (form) {
+				form.$setUntouched();
+			}
 		}
 
 		function transformTag(chip) {
@@ -43,8 +56,9 @@
 		}
 
 		function loadPage() {
-			SubstanceService.getPage().then(function(response) {
-				vm.substancePage = response.data.content;
+			vm.selectedRows = [];
+			vm.loadingPromise = SubstanceService.getPage(vm.query).then(function(response) {
+				vm.substancePage = response.data;
 			});
 		}
 
@@ -52,12 +66,13 @@
 			item.expanded = !item.expanded;
 		}
 
-		function save(substance) {
+		function save(substance, form) {
 			return SubstanceService.save(substance).then(function(response) {
-				if (response.status === 200 || response.status === 204) {
+				if (response.status >= 200 && response.status < 300) {
 					$mdToast.show($mdToast.simple().textContent("Substância salva com sucesso").position('top right'));
 					loadPage();
-					cleanForm();
+					cleanForm(form);
+					$focus('nameInput');
 				} else {
 					$mdToast.show($mdToast.simple().textContent("Ocorreu um erro ao salvar a substância").position('top right'));
 				}
@@ -91,8 +106,8 @@
 		}
 
 		function queryFood(string) {
-			var query = 'name==*' + string + '*';
-			return FoodService.getPage(query).then(function(response) {
+			var filter = 'name==*' + string + '*';
+			return FoodService.getPage({filter: filter}).then(function(response) {
 				return response.data.content;
 			});
 		}

@@ -3,9 +3,9 @@ package io.github.hksm.entity;
 import com.google.common.collect.ImmutableMap;
 import com.querydsl.core.annotations.QueryEntity;
 import com.querydsl.core.types.Path;
-import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Map;
 import java.util.Set;
 
@@ -20,12 +20,10 @@ public class Substance {
     @GeneratedValue
     private Long id;
 
-    @ElementCollection
-    @CollectionTable(name = "SubstanceNames")
-    @NotEmpty
-    private Set<String> names;
+    @NotNull
+    private String name;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "containedSubstances", fetch = FetchType.LAZY)
     private Set<Food> containedInFood;
 
     private boolean isAlergenic;
@@ -33,9 +31,9 @@ public class Substance {
     public Substance() {
     }
 
-    public Substance(Long id, Set<String> names, Set<Food> containedInFood, boolean isAlergenic) {
+    public Substance(Long id, String name, Set<Food> containedInFood, boolean isAlergenic) {
         this.id = id;
-        this.names = names;
+        this.name = name;
         this.containedInFood = containedInFood;
         this.isAlergenic = isAlergenic;
     }
@@ -48,12 +46,12 @@ public class Substance {
         this.id = id;
     }
 
-    public Set<String> getNames() {
-        return names;
+    public String getName() {
+        return name;
     }
 
-    public void setNames(Set<String> names) {
-        this.names = names;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Set<Food> getContainedInFood() {
@@ -78,7 +76,7 @@ public class Substance {
 
     public static class Builder {
         private Long id;
-        private Set<String> names;
+        private String name;
         private Set<Food> containedOnFood;
         private boolean isAlergenic;
 
@@ -86,7 +84,7 @@ public class Substance {
         }
 
         private Substance build() {
-            return new Substance(id, names, containedOnFood, isAlergenic);
+            return new Substance(id, name, containedOnFood, isAlergenic);
         }
 
         public Builder id(Long id) {
@@ -94,8 +92,8 @@ public class Substance {
             return this;
         }
 
-        public Builder name(Set<String> names) {
-            this.names = names;
+        public Builder name(String name) {
+            this.name = name;
             return this;
         }
 
@@ -112,7 +110,7 @@ public class Substance {
 
     public static Map<String, Path> getExpressions() {
         return ImmutableMap.<String, Path>builder()
-                .put("names", QSubstance.substance.names.any())
+                .put("name", QSubstance.substance.name)
                 .put("containedInFood.name", QSubstance.substance.containedInFood.any().name)
                 .put("alergenic", QSubstance.substance)
                 .build();
