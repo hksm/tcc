@@ -7,10 +7,13 @@
 	Factory.$inject = ['BASE_URL', '$http'];
 
 	function Factory(BASE_URL, $http) {
-		var service = {
+		var searchResult = [];
+        var service = {
             save: save,
             remove: remove,
-            getPage: getPage
+            getPage: getPage,
+            search: search,
+            searchResult: searchResult
         };
 
         function save(food) {
@@ -40,6 +43,10 @@
             }
             var params = arr.length > 0 ? ('?' + arr.join('&')) : '';
         	return $http.get(BASE_URL + '/food' + params);
+        }
+
+        function search(term) {
+            return $http.get(BASE_URL + '/food/search?term=' + term);   
         }
 
         return service;

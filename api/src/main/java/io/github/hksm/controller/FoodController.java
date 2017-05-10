@@ -5,9 +5,11 @@ import com.github.vineey.rql.querydsl.sort.OrderSpecifierList;
 import com.github.vineey.rql.querydsl.sort.QuerydslSortContext;
 import com.github.vineey.rql.sort.parser.DefaultSortParser;
 import com.github.vineey.rql.sort.parser.exception.SortParsingException;
+import com.google.common.collect.ImmutableList;
 import com.querydsl.core.types.Predicate;
 import cz.jirutka.rsql.parser.RSQLParserException;
 import io.github.hksm.entity.Food;
+import io.github.hksm.entity.QFood;
 import io.github.hksm.entity.Substance;
 import io.github.hksm.repository.FoodRepository;
 import io.github.hksm.util.SortParser;
@@ -19,6 +21,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.List;
 import java.util.Objects;
 
 import static com.github.vineey.rql.querydsl.filter.QueryDslFilterContext.withMapping;
@@ -43,10 +46,10 @@ public class FoodController {
     }
 
     @GetMapping
-    public ResponseEntity<?> getAll(@RequestParam(name = "size", defaultValue = "20") int size,
-                                    @RequestParam(name = "page", defaultValue = "1") int page,
-                                    @RequestParam(name = "filter", defaultValue = "") String filter,
-                                    @RequestParam(name = "sort", defaultValue = "") String sort) {
+    public ResponseEntity<?> getAll(@RequestParam(name="size", defaultValue="20") int size,
+                                    @RequestParam(name="page", defaultValue="1") int page,
+                                    @RequestParam(name="filter", defaultValue="") String filter,
+                                    @RequestParam(name="sort", defaultValue="") String sort) {
         Sort sortBy;
         try {
             String parsed = SortParser.parseString(sort);
@@ -63,6 +66,16 @@ public class FoodController {
             predicate = null;
         }
         Page<Food> food = foodRepository.findAll(predicate, new PageRequest(--page, size, sortBy));
+        return ResponseEntity.ok(food);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<?> searchByTerm(@RequestParam(name="term", defaultValue="") String term) {
+        Predicate predicate = QFood.food.name.likeIgnoreCase(term)
+                .or(QFood.food.otherNames.any().likeIgnoreCase(term))
+                .or(QFood.food.tags.any().likeIgnoreCase(term))
+                .or(QFood.food.containedSubstances.any().name.likeIgnoreCase(term));
+        List<Food> food = ImmutableList.copyOf(foodRepository.findAll(predicate));
         return ResponseEntity.ok(food);
     }
 

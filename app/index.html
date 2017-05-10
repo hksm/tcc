@@ -50,7 +50,7 @@
                         </md-button>
 
                         <md-input-container class="md-block" flex>
-                            <input id="nameInput" ng-model="vm.searchTerm">
+                            <input id="searchInput" ng-model="vm.searchTerm" ng-model-options="{ debounce: 500 }" ng-change="vm.searchFoodByTerm(vm.searchTerm)">
                         </md-input-container>
 
                         <md-button class="md-icon-button" aria-label="Notifications">
@@ -62,6 +62,15 @@
                         </md-button>
                     </div>
                 </md-toolbar>
+
+                <div layout="row">
+                    <md-nav-bar md-selected-nav-item="vm.navItem" nav-bar-aria-label="Barra de navegação" flex ng-show="vm.isRoute('food') || vm.isRoute('substance')">
+                        <md-nav-item md-nav-href="/food/form" name="foodForm" flex="50" ng-show="vm.isRoute('food')">Cadastro</md-nav-item>
+                        <md-nav-item md-nav-href="/food/list" name="foodList" flex="50" ng-show="vm.isRoute('food')">Listagem</md-nav-item>
+                        <md-nav-item md-nav-href="/substance/form" name="subsForm" flex="50" ng-show="vm.isRoute('substance')">Cadastro</md-nav-item>
+                        <md-nav-item md-nav-href="/substance/list" name="subsList" flex="50" ng-show="vm.isRoute('substance')">Listagem</md-nav-item>
+                    </md-nav-bar>
+                </div>
 
                 <ng-view></ng-view>
             </md-content>
@@ -101,11 +110,14 @@
     <script src="/components/auth/auth.service.js"></script>
     <script src="/components/profile/profile.service.js"></script>
     <script src="/components/profile/profile.controller.js"></script>
+    <script src="/components/search/search-list.controller.js"></script>
     <script src="/components/food/food.service.js"></script>
-    <script src="/components/food/food.controller.js"></script>
+    <script src="/components/food/food-form.controller.js"></script>
+    <script src="/components/food/food-list.controller.js"></script>
     <script src="/components/food/food-filters.controller.js"></script>
     <script src="/components/substance/substance.service.js"></script>
-    <script src="/components/substance/substance.controller.js"></script>
+    <script src="/components/substance/substance-form.controller.js"></script>
+    <script src="/components/substance/substance-list.controller.js"></script>
 </body>
 
 </html>

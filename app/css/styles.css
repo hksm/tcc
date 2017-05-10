@@ -26,7 +26,6 @@ md-toolbar .md-icon-button {
     fill: white;
 }
 
-
 md-content {
     background-color: #eee;
 }
@@ -167,7 +166,7 @@ md-toolbar.md-table-toolbar .md-toolbar-tools ng-md-icon {
     display: none;
 }
 
-ng-md-icon {
+.md-fab ng-md-icon {
     vertical-align: middle;
     display: inline-block;
     line-height: 1;
@@ -186,4 +185,55 @@ ng-md-icon {
 .icon-margin {
     margin-right: 10px;
     margin-top: 2px;
+}
+
+.md-nav-item a.md-button {
+    width: 100%
+}
+
+.divider-margin {
+    margin-top: 10px;
+}
+
+.small-chips .md-chips {
+    font-size: 14px;
+    padding: 0 0 4px 3px;
+    box-shadow: none;
+}
+
+.small-chips .md-chips md-chip {
+    border-radius: 14px;
+    height: 28px;
+    line-height: 28px;
+    margin: 4px 4px 0 0;
+    padding: 0 8px 0 8px;
+}
+
+.fixed-width-30 {
+    max-width: 30px;
+}
+
+#icon-list-top {
+    padding: 5px 0 0 0;
+    fill: rgb(66,66,66);
+}
+
+#icon-list-bottom {
+    padding: 8px 0 0 0;
+    fill: rgb(66,66,66);
+}
+
+.list-line-3 {
+    margin-top: 3px !important;
+}
+
+.custom-label {
+    padding: 2px 5px;
+    border-radius: 5px;
+    color: white;
+}
+
+.custom-label-title {
+    padding: 2px 4px 2px 0;
+    border-right: 2px solid white;
 }

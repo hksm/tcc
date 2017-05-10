@@ -1,0 +1,37 @@
+<md-content>
+    <md-card>
+        <md-list flex>
+            <md-list-item class="md-3-line">
+                <img ng-src="http://placehold.it/40x40" class="md-avatar" alt="Imagem do alimento">
+                <div class="md-list-item-text" layout="column">
+                    <h3><strong>Nome do alimento</strong> / Categoria</h3>
+                    <h4>Outros nomes, como este, como aquele, aquele outro</h4>
+                    <p class="list-line-3">
+                        <span class="custom-label" md-colors="{background: 'brown'}">15 Kcal</span>
+                        <span class="custom-label" md-colors="{background: 'teal'}"><span class="custom-label-title">C</span> 30g</span>
+                        <span class="custom-label" md-colors="{background: 'indigo'}"><span class="custom-label-title">P</span> 10g</span>
+                        <span class="custom-label" md-colors="{background: 'deep-purple'}"><span class="custom-label-title">L</span> 20g</span></p>
+                </div>
+                <div class="md-list-item-text fixed-width-30" layout="column" layout-align="center end">
+                    <ng-md-icon icon="restaurant" id="icon-list-top"></ng-md-icon>
+                    <ng-md-icon icon="grain" id="icon-list-bottom"></ng-md-icon>
+                </div>
+                <div class="md-list-item-text" layout="column" flex>
+                    <md-chips class="small-chips">
+                        <md-chip>Hockey</md-chip>
+                        <md-chip>Lacrosse</md-chip>
+                        <md-chip>Baseball</md-chip>
+                    </md-chips>
+                    <md-chips class="small-chips">
+                        <md-chip>Hockey</md-chip>
+                        <md-chip>Lacrosse</md-chip>
+                        <md-chip>Baseball</md-chip>
+                    </md-chips>
+                </div>
+                <ng-md-icon icon="expand_more" class="md-secondary" ng-click="null"></ng-md-icon>
+            </md-list-item>            
+        </md-list>
+    </md-card>
+</md-content>
+
+<pre>{{vm.results|json}}</pre>
