@@ -47,7 +47,7 @@ public class Food {
     private BigDecimal lipids;
 
     @JsonIgnoreProperties(value = {"relatedFood", "containedSubstances", "tags"}, allowSetters = true)
-    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST })
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "food_related_food",
             joinColumns = @JoinColumn(name = "main_food_id"),
             inverseJoinColumns = @JoinColumn(name = "related_food_id"),
