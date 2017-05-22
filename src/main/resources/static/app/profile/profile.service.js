@@ -17,7 +17,7 @@
         }
 
         function get() {
-            return AuthService.getUserId().then(resp => $http.get(BASE_URL + '/profile/' + resp));
+            return $http.get(BASE_URL + '/profile/' + $rootScope.user.username);
         }
 
         return service;

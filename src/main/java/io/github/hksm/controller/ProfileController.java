@@ -38,9 +38,9 @@ public class ProfileController {
         return ResponseEntity.unprocessableEntity().body(profile);
     }
 
-    @GetMapping("{userId}")
-    public ResponseEntity<?> get(@PathVariable long userId) {
-        Profile profile = profileRepository.findOne(QProfile.profile.userData.id.eq(userId));
+    @GetMapping("{username}")
+    public ResponseEntity<?> get(@PathVariable String username) {
+        Profile profile = profileRepository.findOne(QProfile.profile.userData.username.eq(username));
         if (Objects.nonNull(profile)) {
             return ResponseEntity.ok(profile);
         }
