@@ -17,7 +17,7 @@
 		(function init() {
 			loadEnums();
 			if (foodRequest && foodRequest.data) {
-				vm.food = foodRequest.data;
+				vm.mainFood = foodRequest.data;
 			}
 		})();
 

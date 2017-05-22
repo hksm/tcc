@@ -85,7 +85,6 @@ public class FoodController {
         StringExpression expression = Expressions.asString("%").concat(term).concat("%");
         Predicate predicate = QFood.food.name.likeIgnoreCase(expression)
                 .or(QFood.food.otherNames.any().likeIgnoreCase(expression))
-                .or(QFood.food.tags.any().likeIgnoreCase(expression))
                 .or(QFood.food.containedSubstances.any().name.likeIgnoreCase(expression));
         List<Food> food = ImmutableList.copyOf(foodRepository.findAll(predicate));
         return ResponseEntity.ok(food);
