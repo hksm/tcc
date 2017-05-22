@@ -1,0 +1,65 @@
+<md-content>
+    <md-card>
+        <md-toolbar class="md-table-toolbar md-default" ng-hide="vm.selectedRows.length">
+            <div class="md-toolbar-tools">
+                <span>Alimentos</span>
+                <div flex></div>
+                <button class="md-button md-icon-button" ng-click="vm.viewFilters()" md-ink-ripple aria-label="Visualizar filtros">
+                    <ng-md-icon icon="filter_list"></ng-md-icon>
+                </button>
+                <button class="md-button md-icon-button" ng-click="vm.loadPage()" md-ink-ripple aria-label="Atualizar">
+                    <ng-md-icon icon="refresh"></ng-md-icon>
+                </button>
+            </div>
+        </md-toolbar>
+
+        <md-toolbar class="md-table-toolbar alternate" ng-show="vm.selectedRows.length">
+            <div class="md-toolbar-tools">
+                <div>{{vm.selectedRows.length}} {{vm.selectedRows.length === 1 ? 'item selecionado' : 'itens selecionados'}}</div>
+                <div flex></div>
+                <button class="md-button md-icon-button" ng-click="vm.edit(vm.selectedRows[0])" md-ink-ripple aria-label="Editar">
+                    <ng-md-icon icon="mode_edit" ng-hide="vm.selectedRows.length > 1"></ng-md-icon>
+                </button>
+                <button class="md-button md-icon-button" ng-click="vm.remove(vm.selectedRows)" md-ink-ripple aria-label="Remover">
+                    <ng-md-icon icon="delete"></ng-md-icon>
+                </button>
+            </div>
+        </md-toolbar>
+
+        <md-table-container>
+            <table md-table md-row-select multiple ng-model="vm.selectedRows" md-progress="vm.loadingPromise">
+                <thead md-head md-order="vm.query.sort" md-on-reorder="vm.loadPage">
+                    <tr md-row>
+                        <th md-column md-order-by="name"><span>Nome</span></th>
+                        <th md-column>Alergênico</th>
+                        <th md-column>Categoria</th>
+                        <th md-column md-numeric>Quantidade</th>
+                        <th md-column>Unidade</th>
+                        <th md-column md-numeric>Calorias (Kcal)</th>
+                        <th md-column md-numeric>Carbs (g)</th>
+                        <th md-column md-numeric>Proteínas (g)</th>
+                        <th md-column md-numeric>Lipídios (g)</th>
+                    </tr>
+                </thead>
+                <tbody md-body>
+                    <tr md-row md-select="food" md-select-id="id" md-auto-select ng-repeat="food in vm.foodPage.content">
+                        <td md-cell>{{food.name}}</td>
+                        <td md-cell>
+                            <ng-md-icon icon="priority_high" ng-if="food.alergenic" class="warning-red"></ng-md-icon>
+                            <ng-md-icon icon="remove" ng-if="!food.alergenic" class="standard-gray"></ng-md-icon>
+                        </td>
+                        <td md-cell>{{food.category | enumDescription: vm.categories}}</td>
+                        <td md-cell>{{food.quantity}}</td>
+                        <td md-cell>{{food.unit | enumDescription: vm.units}}</td>
+                        <td md-cell>{{food.calories}}</td>
+                        <td md-cell>{{food.carbs}}</td>
+                        <td md-cell>{{food.proteins}}</td>
+                        <td md-cell>{{food.lipids}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </md-table-container>
+
+        <md-table-pagination md-limit="vm.query.size" md-limit-options="[10, 20, 30]" md-page="vm.query.page" md-total="{{vm.foodPage.totalElements}}" md-on-paginate="vm.loadPage" md-page-select></md-table-pagination>
+    </md-card>
+</md-content>

@@ -1,0 +1,26 @@
+<div layout="row" layout-align="center center" layout-fill>
+    <div class="login-box md-whiteframe-z1" layout="column">
+        <md-toolbar md-colors="{background: 'blue-grey'}">
+            <h2 class="md-toolbar-tools"><span>Login</span></h2>
+        </md-toolbar>
+        <md-content class="md-padding" layout="row">
+            <form ng-submit="vm.login(vm.credentials)" layout="column" flex>
+                <md-input-container>
+                    <label>Usuário</label>
+                    <md-icon md-svg-icon="account" md-colors="{fill: 'blue-grey-800'}"></md-icon>
+                    <input type="text" ng-model="vm.credentials.username">
+                </md-input-container>
+                <md-input-container>
+                    <label>Senha</label>
+                    <md-icon md-svg-icon="key" md-colors="{fill: 'blue-grey-800'}"></md-icon>
+                    <input type="password" ng-model="vm.credentials.password">
+                </md-input-container>
+                <div layout="row" layout-align="center center" style="padding-top:20px">
+                    <md-button ng-href="/register" md-no-ink="md-no-ink">Criar conta</md-button>
+                    <div flex="flex"></div>
+                    <md-button class="md-raised md-primary" md-colors="{background: 'blue-grey-700'}" ng-click="vm.login(vm.credentials)">Entrar</md-button>
+                </div>
+            </form>
+        </md-content>
+    </div>
+</div>

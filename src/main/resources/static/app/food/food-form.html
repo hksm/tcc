@@ -1,0 +1,115 @@
+<md-content layout-padding>
+    <md-card>
+        <form name="foodForm">
+            <md-card-title>
+                <md-card-title-text>
+                    <span class="md-headline">{{vm.food.id ? 'Editando alimento' : 'Cadastro de alimentos'}}</span>
+                </md-card-title-text>
+            </md-card-title>
+            
+            <md-card-content>
+
+                <div layout="row" layout-padding>
+                    <img ng-src="http://placehold.it/150x150" alt="Imagem do alimento" flex="30">
+
+                    <div flex>
+                        <div layout-gt-sm="row">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Nome principal</label>
+                                <input id="nameInput" ng-model="vm.food.name" ng-required="true">
+                            </md-input-container>
+                        </div>
+
+                        <div layout-gt-sm="row" class="chip-inside-input-container">
+                            <md-input-container class="md-block" md-no-float flex-gt-sm>
+                                <label>Outros nomes</label>
+                                <md-chips ng-model="vm.food.otherNames" md-removable="true" md-max-chips="10">
+                                    <md-chip-template>
+                                        <strong>{{$chip}}</strong>
+                                    </md-chip-template>
+                                </md-chips>
+                            </md-input-container>
+                        </div>
+                    </div>
+                
+                </div>
+
+                <h2 class="md-title">Classificação</h2>
+
+                <div layout-gt-sm="row">
+                    <md-input-container class="md-block">
+                        <md-switch class="md-primary no-margin" ng-model="vm.food.alergenic">
+                            Alergênico
+                        </md-switch>
+                    </md-input-container>
+                        
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Categoria</label>
+                        <md-select ng-model="vm.food.category" ng-required="true">
+                            <md-option ng-repeat="category in vm.categories" ng-value="category.enum">
+                                {{category.name}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+                
+                <h2 class="md-title">Valor nutricional</h2>
+
+                <div layout-gt-sm="row">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Quantidade</label>
+                        <input ng-model="vm.food.quantity" numbers-only integer="10" decimal="2">
+                    </md-input-container>
+
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Categoria</label>
+                        <md-select ng-model="vm.food.unit">
+                            <md-option ng-repeat="unit in vm.units" ng-value="unit.enum">
+                                {{unit.name}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Valor calórico</label>
+                        <input ng-model="vm.food.calories" numbers-only integer="10" decimal="2" append-unit="Kcal" append-location="after">
+                    </md-input-container>
+
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Carboidratos</label>
+                        <input ng-model="vm.food.carbs" numbers-only integer="10" decimal="2" append-unit="g" append-location="after">
+                    </md-input-container>
+
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Proteínas</label>
+                        <input ng-model="vm.food.proteins" numbers-only integer="10" decimal="2" append-unit="g" append-location="after">
+                    </md-input-container>
+
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Lipídios</label>
+                        <input ng-model="vm.food.lipids" numbers-only integer="10" decimal="2" append-unit="g" append-location="after">
+                    </md-input-container>
+                </div>
+
+                <h2 class="md-title">Alimentos relacionados</h2>
+
+                <autocomplete-with-button query-search="vm.queryFood" list="vm.food.relatedFood" search-text="vm.searchTextFood" placeholder="Pesquisar um alimento"></autocomplete-with-button>
+                
+                <listbox-options list="vm.food.relatedFood" categories="vm.categories"></listbox-options>
+
+                <h2 class="md-title">Substâncias contidas</h2>
+
+                <autocomplete-with-button query-search="vm.querySubstance" list="vm.food.containedSubstances" search-text="vm.searchTextSubstance" placeholder="Pesquisar uma substância"></autocomplete-with-button>
+                
+                <listbox-options list="vm.food.containedSubstances"></listbox-options>
+
+            </md-card-content>
+            
+            <md-card-actions layout="row" layout-align="end center">
+                <md-button class="md-raised md-primary" ng-click="vm.save(vm.food, foodForm)" ng-disabled="foodForm.$invalid">Salvar</md-button>
+                <md-button class="md-raised" ng-click="vm.save(vm.food, foodForm, true)" ng-disabled="foodForm.$invalid">Salvar e adicionar outro</md-button>
+                <md-button class="md-raised" ng-click="vm.cleanForm(foodForm)">Limpar</md-button>
+            </md-card-actions>
+        </form>
+    </md-card>
+</md-content>

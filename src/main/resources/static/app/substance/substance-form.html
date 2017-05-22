@@ -1,0 +1,39 @@
+<md-content layout-padding>
+    <md-card>
+        <form name="substanceForm">
+            <md-card-title>
+                <md-card-title-text>
+                    <span class="md-headline">{{vm.substance.id ? 'Editando substância' : 'Cadastro de substâncias'}}</span>
+                </md-card-title-text>
+            </md-card-title>
+            
+            <md-card-content>
+                <div layout-gt-sm="row">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Nome</label>
+                        <input id="nameInput" ng-model="vm.substance.name" ng-required="true">
+                    </md-input-container>
+
+                    <md-input-container class="md-block">
+                        <md-switch class="md-primary no-margin" name="special" ng-model="vm.substance.alergenic">
+                            Alergênica
+                        </md-switch>
+                    </md-input-container>
+                </div>
+
+                <h2 class="md-title">Alimentos em que está contida</h2>
+
+                <autocomplete-with-button query-search="vm.queryFood" list="vm.substance.containedInFood" search-text="vm.searchTextFood" placeholder="Pesquisar um alimento"></autocomplete-with-button>
+                
+                <listbox-options list="vm.substance.containedInFood" categories="vm.categories"></listbox-options>
+
+            </md-card-content>
+            
+            <md-card-actions layout="row" layout-align="end center">
+                <md-button class="md-raised md-primary" ng-click="vm.save(vm.substance, substanceForm)" ng-disabled="substanceForm.$invalid">Salvar</md-button>
+                <md-button class="md-raised md-primary" ng-click="vm.save(vm.substance, substanceForm, true)" ng-disabled="substanceForm.$invalid">Salvar e adicionar outro</md-button>
+                <md-button class="md-raised" ng-click="vm.cleanForm(substanceForm)">Limpar</md-button>
+            </md-card-actions>
+        </form>
+    </md-card>
+</md-content>

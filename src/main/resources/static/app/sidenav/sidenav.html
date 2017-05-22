@@ -1,0 +1,96 @@
+<md-sidenav
+    class="md-sidenav-left height-fix"
+    md-component-id="left"
+    md-is-locked-open="$mdMedia('gt-md')"
+    md-whiteframe="4"
+    md-is-open="vm.isOpen"
+    ng-if="user.roleUser">
+
+    <!-- <md-toolbar class="md-theme-indigo md-whiteframe-z2" md-colors="{background: 'teal-700'}">
+        <h1 class="md-toolbar-tools">Menu</h1>
+    </md-toolbar> -->
+
+    <md-toolbar class="md-whiteframe-z2 sidebar-holder">
+        <div class="sidebar-header header-cover" style="background-image: url(/img/sidenav-background.jpg);">
+	        <div class="sidebar-image">
+	            <img ng-src="/img/avatar-placeholder.png" class="md-avatar" alt="Imagem do perfil">
+	        </div>
+	        <a class="sidebar-brand" href="#foobar">
+	            {{user.username}}
+	        </a>
+	    </div>
+    </md-toolbar>
+
+    <md-content ng-controller="SidenavController as vm">
+		<md-list>
+			<md-item>
+				<md-content>
+					<a href="/">
+						<md-item-content md-ink-ripple layout="row" layout-align="start center">
+							<div class="inset">
+								<ng-md-icon icon="home"></ng-md-icon>
+							</div>
+							<div class="inset">Início</div>
+						</md-item-content>
+					</a>
+				</md-content>
+			</md-item>
+
+			<md-item>
+				<md-content>
+					<a href="/profile">
+						<md-item-content md-ink-ripple layout="row" layout-align="start center">
+							<div class="inset">
+								<ng-md-icon icon="assignment_ind"></ng-md-icon>
+							</div>
+							<div class="inset">Perfil</div>
+						</md-item-content>
+					</a>
+				</md-content>
+			</md-item>
+
+			<md-item>
+				<md-content>
+					<a href="#">
+						<md-item-content md-ink-ripple layout="row" layout-align="start center">
+							<div class="inset">
+								<ng-md-icon icon="history"></ng-md-icon>
+							</div>
+							<div class="inset">Histórico</div>
+						</md-item-content>
+					</a>
+				</md-content>
+			</md-item>
+
+			<md-divider class="divider-margin"></md-divider>
+			<md-subheader>Consultas</md-subheader>
+
+			<md-item>
+				<md-content>
+					<a href="/food/list">
+						<md-item-content md-ink-ripple layout="row" layout-align="start center">
+							<div class="inset">
+								<ng-md-icon icon="restaurant"></ng-md-icon>
+							</div>
+							<div class="inset">Alimento</div>
+						</md-item-content>
+					</a>
+				</md-content>
+			</md-item>
+
+			<md-item>
+				<md-content>
+					<a href="/substance/list">
+						<md-item-content md-ink-ripple layout="row" layout-align="start center">
+							<div class="inset">
+								<md-icon md-svg-icon="flask-outline"></md-icon>
+							</div>
+							<div class="inset">Substância</div>
+						</md-item-content>
+					</a>
+				</md-content>
+			</md-item>		
+
+		</md-list>
+	</md-content>
+</md-sidenav>

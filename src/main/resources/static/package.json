@@ -1,0 +1,39 @@
+{
+  "name": "tcc",
+  "version": "0.0.1",
+  "description": "",
+  "main": "app/app.js",
+  "repository": "https://github.com/hksm/tcc",
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "http-server": "^0.9.0",
+    "livereload": "^0.6.2"
+  },
+  "dependencies": {
+    "angular": "^1.5.9",
+    "angular-animate": "^1.5.9",
+    "angular-aria": "^1.5.9",
+    "angular-cookies": "^1.6.4",
+    "angular-loader": "^1.5.9",
+    "angular-material": "^1.1.3",
+    "angular-material-data-table": "^0.10.10",
+    "angular-material-icons": "^0.7.1",
+    "angular-messages": "^1.5.9",
+    "angular-route": "^1.5.9",
+    "angular-sanitize": "^1.5.9",
+    "gulp": "^3.9.1",
+    "gulp-jshint": "^2.0.4",
+    "gulp-webserver": "^0.9.1",
+    "jshint": "^2.9.4",
+    "meanie-angular-focus": "^1.5.1",
+    "roboto-fontface": "^0.7.0"
+  },
+  "scripts": {
+    "prebuild": "npm install",
+    "pre-test": "echo pre-integration-test-success",
+    "test": "return 1",
+    "post-test": "echo post-integration-test-success",
+    "build": "gulp"
+  }
+}
