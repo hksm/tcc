@@ -4,12 +4,13 @@
 
 	angular.module('tcc').controller('SearchListController', Controller);
 
-	Controller.$inject = ['$scope', 'FoodService', 'EnumsService'];
+	Controller.$inject = ['$scope', 'FoodService', 'EnumsService', '$location'];
 
-	function Controller($scope, FoodService, EnumsService) {
+	function Controller($scope, FoodService, EnumsService, $location) {
 		var vm = this;
 
 		vm.formatOtherNames = formatOtherNames;
+		vm.replaceFood = replaceFood;
 
 		vm.categories = [];
 		vm.units = [];
@@ -33,6 +34,10 @@
 
 		function formatOtherNames(item) {
 			return item.otherNames.join(', ');
+		}
+
+		function replaceFood(item) {
+			$location.path('/replace/' + item.id);
 		}
 
 	}

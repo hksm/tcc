@@ -30,7 +30,7 @@
 				controller: 'SearchListController',
 				controllerAs: 'vm'
 			})
-			.when('/replace', {
+			.when('/replace/:id?', {
 				templateUrl: '/app/search/replace-list.html',
 				controller: 'ReplaceListController',
 				controllerAs: 'vm',

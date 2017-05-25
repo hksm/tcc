@@ -111,7 +111,8 @@
 	    		openSearch();
 	    	}
 	    	
-			var route = next.replace(BASE_URL_APP, '').replace('list', '').replace('form', '').split('/').join('');
+			var aux = next.substring(8).substring(next.substring(8).indexOf('/') + 1);
+			var route = aux.indexOf('/') > 0 ? aux.substring(0, aux.indexOf('/')) : aux;
 			var routes = {
 				'profile': 'Perfil',
 				'history': 'Histórico',

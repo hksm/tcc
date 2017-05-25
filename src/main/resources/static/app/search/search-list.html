@@ -35,12 +35,12 @@
                     </p>
                 </div>
                 <div class="md-list-item-text fixed-width-30" layout="column" layout-align="center end">
-                    <ng-md-icon icon="restaurant" id="icon-list-top" ng-if="item.relatedFood.length > 0">
+                    <md-icon md-svg-icon="food-apple" id="icon-list-top" ng-if="item.relatedFood.length > 0">
                         <md-tooltip md-direction="top" md-z-index="1000">Alimentos relacionados</md-tooltip>
-                    </ng-md-icon>
-                    <ng-md-icon icon="grain" id="icon-list-bottom" ng-if="item.containedSubstances.length > 0">
+                    </md-icon>
+                    <md-icon md-svg-icon="flask-outline" id="icon-list-bottom" ng-if="item.containedSubstances.length > 0">
                         <md-tooltip md-direction="bottom" md-z-index="1000">Substâncias contidas</md-tooltip>
-                    </ng-md-icon>
+                    </md-icon>
                 </div>
                 <div class="md-list-item-text" layout="column" flex>
                     <md-chips class="small-chips" ng-model="item.relatedFood" readonly="true">
@@ -50,7 +50,7 @@
                         <md-chip-template>{{ $chip.name }}</md-chip-template>
                     </md-chips>
                 </div>
-                <ng-md-icon icon="send" class="md-secondary" ng-click="null" md-colors="{fill: 'red'}"></ng-md-icon>
+                <md-icon class="md-secondary" md-svg-icon="send" ng-click="vm.replaceFood(item)" md-colors="{fill: 'red'}"></md-icon>
             </md-list-item>            
         </md-list>
     </md-card>

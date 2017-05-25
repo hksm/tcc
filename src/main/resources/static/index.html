@@ -39,19 +39,19 @@
                                 <ng-md-icon icon="person"></ng-md-icon>
                             </md-button>
                             <md-menu-content width="4">
-                                <md-menu-item>
+                                <md-menu-item ng-if="!user.roleUser">
                                     <md-button ng-href="/login">
                                         <md-icon md-svg-icon="login"></md-icon>
                                         Entrar
                                     </md-button>
                                 </md-menu-item>
-                                <md-menu-item>
+                                <md-menu-item ng-if="!user.roleUser">
                                     <md-button ng-href="/register">
                                         <md-icon md-svg-icon="account-plus"></md-icon>
                                         Registrar
                                     </md-button>
                                 </md-menu-item>
-                                <md-menu-item>
+                                <md-menu-item ng-if="user.roleUser">
                                     <md-button ng-href="/logout" ng-click="vm.logout()">
                                         <md-icon md-svg-icon="logout"></md-icon>
                                         Sair
@@ -93,7 +93,7 @@
 
         <div ng-hide="vm.isLoginOrSignUp() || !user.roleAdmin">
             <md-button class="md-fab md-primary md-fab-bottom-right md-mini" ng-class="{'md-fab-small-1': vm.isRoute('substance/form'), 'md-fab-small-2': !vm.isRoute('substance/form')}" aria-label="Pesquisar" ng-click="vm.goToForm('food')" ng-hide="vm.isRoute('food/form') || vm.searching" md-colors="{background: 'blue'}">
-                <ng-md-icon icon="restaurant"></ng-md-icon>
+                <md-icon md-svg-icon="food-apple"></md-icon>
             </md-button>
 
             <md-button class="md-fab md-primary md-fab-bottom-right md-mini md-fab-small-1" aria-label="Pesquisar" ng-click="vm.goToForm('substance')" ng-hide="vm.isRoute('substance/form') || vm.searching" md-colors="{background: 'green'}">
@@ -145,6 +145,7 @@
     <script src="/app/profile/profile.service.js"></script>
     <script src="/app/profile/profile.controller.js"></script>
 
+    <script src="/app/search/replace.service.js"></script>
     <script src="/app/search/search-list.controller.js"></script>
     <script src="/app/search/replace-list.controller.js"></script>
 
