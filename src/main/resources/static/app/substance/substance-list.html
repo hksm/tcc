@@ -4,6 +4,9 @@
             <div class="md-toolbar-tools">
                 <span>Substâncias</span>
                 <div flex></div>
+                <button class="md-button md-icon-button" ng-click="vm.viewFilters()" md-ink-ripple aria-label="Visualizar filtros">
+                    <ng-md-icon icon="filter_list"></ng-md-icon>
+                </button>
                 <button class="md-button md-icon-button" ng-click="vm.loadPage()" md-ink-ripple aria-label="Atualizar">
                     <ng-md-icon icon="refresh"></ng-md-icon>
                 </button>
@@ -28,12 +31,14 @@
                 <thead md-head md-order="vm.query.sort" md-on-reorder="vm.loadPage">
                     <tr md-row>
                         <th md-column md-order-by="name"><span>Nome</span></th>
+                        <th md-column>Outros nomes</th>
                         <th md-column>Alergênico</th>
                     </tr>
                 </thead>
                 <tbody md-body>
                     <tr md-row md-select="substance" md-select-id="id" md-auto-select ng-repeat="substance in vm.substancePage.content">
                         <td md-cell>{{substance.name}}</td>
+                        <td md-cell>{{vm.formatOtherNames(substance.otherNames)}}</td>
                         <td md-cell>
                             <ng-md-icon icon="priority_high" ng-if="substance.alergenic" class="warning-red"></ng-md-icon>
                             <ng-md-icon icon="remove" ng-if="!substance.alergenic" class="standard-gray"></ng-md-icon>

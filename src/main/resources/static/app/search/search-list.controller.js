@@ -4,13 +4,14 @@
 
 	angular.module('tcc').controller('SearchListController', Controller);
 
-	Controller.$inject = ['$scope', 'FoodService', 'EnumsService', '$location'];
+	Controller.$inject = ['$scope', '$rootScope', 'FoodService', 'EnumsService', '$location', 'NotificationService', '$mdToast'];
 
-	function Controller($scope, FoodService, EnumsService, $location) {
+	function Controller($scope, $rootScope, FoodService, EnumsService, $location, NotificationService, $mdToast) {
 		var vm = this;
 
 		vm.formatOtherNames = formatOtherNames;
 		vm.replaceFood = replaceFood;
+		vm.suggestInclusion = suggestInclusion;
 
 		vm.categories = [];
 		vm.units = [];
@@ -24,6 +25,17 @@
 		}, function(newValue) {
 			vm.results = newValue;
 		});
+
+		function suggestInclusion() {
+			var name = FoodService.searchValue;
+			if (!name) {
+				return;
+			}
+			var message = $rootScope.user.username + ' sugeriu a adição do alimento: ' + name; 
+			NotificationService.notificate(message).then(function() {
+				$mdToast.show($mdToast.simple().textContent("Sugestão enviada").position('top right'));
+			});
+		}
 
 		function loadEnums() {
 			EnumsService.options().then(function(enums) {

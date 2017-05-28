@@ -8,13 +8,15 @@
 
 	function Factory(BASE_URL, $http) {
 		var searchResult = [];
+        var searchValue = '';
         var service = {
             save: save,
             remove: remove,
             get: get,
             getPage: getPage,
             search: search,
-            searchResult: searchResult
+            searchResult: searchResult,
+            searchValue: searchValue
         };
 
         function save(food) {

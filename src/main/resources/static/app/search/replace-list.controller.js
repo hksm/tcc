@@ -31,7 +31,6 @@
 		}
 
 		function formatOtherNames(item) {
-			console.log(item);
 			return item.otherNames.join(', ');
 		}
 
@@ -40,7 +39,6 @@
 				response.data.sort((a,b) => a.second > b.second ? a : b);
 				console.log(response.data);
 				vm.results = response.data;
-				vm.results.shift(); // remove 1st element
 			});
 		}
 

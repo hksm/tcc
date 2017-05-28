@@ -50,7 +50,7 @@
                         <md-chip-template>{{ $chip.name }}</md-chip-template>
                     </md-chips>
                 </div>
-                <ng-md-icon icon="star" class="md-secondary" ng-click="null" md-colors="{fill: 'amber-700'}"></ng-md-icon>
+                <ng-md-icon icon="star" class="md-secondary" ng-click="null" md-colors="{fill: 'amber'}"></ng-md-icon>
             </md-list-item>            
         </md-list>
     </md-card>
@@ -59,12 +59,14 @@
         <h2>Substitutos</h2>
     </div>
 
-    <div ng-if="!vm.mainFood.calories && (!vm.mainFood.carbs || !vm.mainFood.proteins || !vm.mainFood.lipids)">
-        <h3 style="text-align: center;">O valor nutricional do alimento não está especificado</h3>
-    </div>
+    <warning-box message="O valor nutricional do alimento não está especificado" ng-if="!vm.mainFood.calories && (!vm.mainFood.carbs || !vm.mainFood.proteins || !vm.mainFood.lipids)"></warning-box>
+
+    
+
+    
 
     <md-card ng-repeat="item in vm.results">
-        <md-list flex>
+        <md-list flex ng-class="{'red-strip': item.third === 'DANGER', 'orange-strip': item.third === 'WARNING', 'green-strip': item.third === 'SAFE'}">
             <md-list-item class="md-3-line">
                 <img ng-src="http://placehold.it/40x40" class="md-avatar" alt="Imagem do alimento">
                 <div class="md-list-item-text" layout="column">
@@ -77,9 +79,9 @@
                             {{ item.first.category | enumDescription: vm.categories }}
                             <md-tooltip md-direction="top" md-z-index="1000">Categoria</md-tooltip>
                         </span>
-                        <span class="custom-label-2" md-colors="{background: 'blue-300'}">
+                        <span class="custom-label-2" md-colors="{background: 'blue'}">
                             {{ (item.second / 3) | number: 1 }}% similar
-                            <md-tooltip md-direction="top" md-z-index="1000">Porcentagem de similaridade entre os dois alimentos</md-tooltip>
+                            <md-tooltip md-direction="top" md-z-index="1000">Percentual de similaridade</md-tooltip>
                         </span>
                     </h3>
                     <h4 class="list-line-2-height-fix">{{ vm.formatOtherNames(item.first) }}</h4>
@@ -118,7 +120,7 @@
                         <md-chip-template>{{ $chip.name }}</md-chip-template>
                     </md-chips>
                 </div>
-                <ng-md-icon icon="star" class="md-secondary" ng-click="null" md-colors="{fill: 'yellow'}"></ng-md-icon>
+                <ng-md-icon icon="star" class="md-secondary" ng-click="null" md-colors="{fill: 'amber'}"></ng-md-icon>
             </md-list-item>            
         </md-list>
     </md-card>

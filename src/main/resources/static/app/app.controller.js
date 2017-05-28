@@ -4,9 +4,9 @@
 
 	angular.module('tcc').controller('AppController', Controller);
 
-	Controller.$inject = ['$scope', '$mdSidenav', '$timeout', '$rootScope', '$http', '$mdMedia', '$focus', '$location', 'FoodService', 'BASE_URL_APP', 'AuthCookie'];
+	Controller.$inject = ['$scope', '$mdSidenav', '$timeout', '$rootScope', '$http', '$mdMedia', '$focus', '$location', 'FoodService', 'BASE_URL_APP', 'AuthCookie', '$mdPanel', 'NotificationService'];
 
-	function Controller($scope, $mdSidenav, $timeout, $rootScope, $http, $mdMedia, $focus, $location, FoodService, BASE_URL_APP, AuthCookie) {
+	function Controller($scope, $mdSidenav, $timeout, $rootScope, $http, $mdMedia, $focus, $location, FoodService, BASE_URL_APP, AuthCookie, $mdPanel, NotificationService) {
 		var vm = this;
 		vm.openSearch = openSearch;
 		vm.goBack = goBack;
@@ -15,10 +15,13 @@
 		vm.searchFoodByTerm = searchFoodByTerm;
 		vm.isLoginOrSignUp = isLoginOrSignUp;
 		vm.logout = logout;
+		vm.showNotifications = showNotifications;
 
 		$scope.toggleLeft = buildDelayedToggler('left');
 
 		vm.openSidenav = buildDelayedToggler('left');
+
+		$rootScope.notificationsCount = 0;
 
 		vm.isLockedOpen = function() {
 	    	return $mdMedia('gt-md');
@@ -26,6 +29,7 @@
 
 		(function init() {
 			checkCookie();
+			checkNotifications();
 		})();
 
 	    function debounce(func, wait) {
@@ -71,6 +75,7 @@
 	    }
 
 	    function searchFoodByTerm(term) {
+	    	FoodService.searchValue = term;
 	    	return FoodService.search(term).then(function(response) {
 		    	$location.path('/search');
 	    		FoodService.searchResult = response.data;
@@ -99,11 +104,41 @@
 			$location.path('/');
 		}
 
+		function showNotifications(event) {
+			var position = $mdPanel.newPanelPosition().relativeTo('.notifications-menu')
+					.addPanelPosition($mdPanel.xPosition.ALIGN_END, $mdPanel.yPosition.BELOW);
+
+			var config = {
+				attachTo: angular.element(document.body),
+				controller: 'NotificationController',
+				controllerAs: 'vm',
+				templateUrl: '/app/notification/notification.html',
+				panelClass: 'notifications-menu-body',
+				position: position,
+				locals: {				},
+				openFrom: event,
+				clickOutsideToClose: true,
+				escapeToClose: true,
+				focusOnOpen: true,
+				zIndex: 2
+			};
+
+			$mdPanel.open(config);
+		}
+
+		function checkNotifications() {
+			NotificationService.countByUser().then(function(response) {
+				$rootScope.notificationsCount = response.data || 0;
+			});
+		}
+
 	    $rootScope.$on("$locationChangeStart", function(event, next, old) {
 	    	vm.oldRoute = old;
 	    	if (!vm.isLockedOpen()) {
 	    		$mdSidenav('left').close();
 	    	}
+
+	    	checkNotifications();
 
 	    	if (!isRoute('search')) {
 	    		goBack();

@@ -21,6 +21,17 @@
                     </md-input-container>
                 </div>
 
+                <div layout-gt-sm="row">
+                    <md-input-container class="md-block" md-no-float flex-gt-sm>
+                        <label>Outros nomes</label>
+                        <md-chips ng-model="vm.substance.otherNames" md-removable="true" md-max-chips="10">
+                            <md-chip-template>
+                                <strong>{{$chip}}</strong>
+                            </md-chip-template>
+                        </md-chips>
+                    </md-input-container>
+                </div>
+                
                 <h2 class="md-title">Alimentos em que está contida</h2>
 
                 <autocomplete-with-button query-search="vm.queryFood" list="vm.substance.containedInFood" search-text="vm.searchTextFood" placeholder="Pesquisar um alimento"></autocomplete-with-button>

@@ -21,12 +21,12 @@
 			vm.filters.categories = vm.categories.filter(c => c.filtered);
 			var arr = [];
 			if (vm.filters.name) {
-				arr.push('name==*' + vm.filters.name + '*');
+				arr.push('(name==\'*' + vm.filters.name + '*\' or otherNames==\'*' + vm.filters.name + '*\')');
 			}
 			if (vm.filters.isAlergenic) {
 				arr.push('alergenic==true');
 			}
-			if (vm.filters.categories) {
+			if (vm.filters.categories && vm.filters.categories.length > 0) {
 				arr.push('category=in=(' + vm.filters.categories.map(c => c.enum) + ')');
 			}
 			vm.query.filter = arr.join(' ' + vm.filters.mode + ' ');

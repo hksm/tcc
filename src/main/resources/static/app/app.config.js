@@ -2,7 +2,7 @@
 
 	'use strict';
 
-	angular.module('tcc').config(function($routeProvider, $locationProvider, $mdThemingProvider, $mdIconProvider) {
+	angular.module('tcc').config(function($routeProvider, $locationProvider, $mdThemingProvider, $mdIconProvider, flowFactoryProvider) {
 
 		$routeProvider
 			.when('/', {
@@ -94,10 +94,16 @@
 			$locationProvider.html5Mode(true);
 
 			$mdThemingProvider.theme('default')
-				.primaryPalette('teal')
+				.primaryPalette('deep-orange')
 				.accentPalette('deep-purple');
 
 			$mdIconProvider.defaultIconSet('img/icons/mdi.svg');
+
+			flowFactoryProvider.defaults = {
+				target: '/api/images',
+				singleFile: true,
+				testChunks: false
+			};
 
 	});
 	

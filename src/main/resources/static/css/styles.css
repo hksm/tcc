@@ -319,13 +319,11 @@ md-toolbar .sidebar-brand {
     right: 0;
   
     display: block;
-    height: 48px;
-    line-height: 48px;
+    line-height: 32px;
     
     padding: 0;
     padding-left: 16px;
     padding-right: 56px;
-    padding-top: 5px;
   
     text-decoration: none;
     clear: both;
@@ -339,6 +337,7 @@ md-toolbar .sidebar-brand {
             transition: background-color 0.2s ease-in-out;
   
     color: #eee;
+    background-color: rgba(60,60,60,0.6);
 
 }
 
@@ -371,3 +370,62 @@ md-toolbar .sidebar-brand {
     max-width: 95%;
     margin: 0 auto;
 }
+
+.red-strip {
+    border-left: 3px red solid;
+}
+
+.orange-strip {
+    border-left: 3px orange solid;
+}
+
+.green-strip {
+    border-left: 3px green solid;
+}
+
+.fill-black {
+    fill: rgb(66,66,66) !important;
+}
+
+.warning-box {
+    max-width: 60%;
+    padding: 5px;
+    background-color: white;
+    margin: 5px auto;
+}
+
+.centered-element {
+    margin-right: auto;
+    margin-left: auto;
+    display: block;
+}
+
+.notifications-menu-body {
+    background: white;
+    box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
+        0px 4px 5px 0px rgba(0, 0, 0, 0.14),
+        0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+    width: 415px;
+}
+
+.bell-notifications:before {
+    display: block;
+    position: absolute;
+    right: 5px;
+    top: 3px;
+    font-size: 12px;
+    line-height: 1.2;
+    background: rgb(66,66,66);
+    color: white;
+
+    width: 16px;
+    height: 15px;
+    border-radius: 50%;
+}
+
+.bell-notif-1:before { content: '1'; }
+.bell-notif-2:before { content: '2'; }
+.bell-notif-3:before { content: '3'; }
+.bell-notif-4:before { content: '4'; }
+.bell-notif-5:before { content: '5'; }
+.bell-notif-5p:before { content: '5+'; }

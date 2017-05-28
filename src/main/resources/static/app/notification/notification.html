@@ -1,0 +1,11 @@
+<div>
+     <md-list>
+          <md-list-item ng-if="!vm.notifications || !vm.notifications.length">
+               <p>Não há notificações</p>
+          </md-list-item>
+          <md-list-item ng-repeat="notification in vm.notifications">
+               <p>{{notification.message}}</p>
+               <md-icon class="md-secondary" ng-click="vm.closeNotification(notification)" aria-label="Dispensar" md-svg-icon="close"></md-icon>
+          </md-list-item>
+     </md-list>
+</div>

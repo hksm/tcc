@@ -1,57 +1,67 @@
 <md-content>
+
+    <warning-box message="Nenhum resultado encontrado. Deseja sugerir que o alimento seja adicionado?" ng-if="!vm.results || !vm.results.length">
+        <md-button ng-click="vm.suggestInclusion()" layout-align="center" class="centered-element">Sugerir inclusão</md-button>
+    </warning-box>
+
     <md-card ng-repeat="item in vm.results">
-        <md-list flex>
+        <md-list flex ng-class="{'red-strip': item.second === 'DANGER', 'orange-strip': item.second === 'WARNING', 'green-strip': item.second === 'SAFE'}">
             <md-list-item class="md-3-line">
                 <img ng-src="http://placehold.it/40x40" class="md-avatar" alt="Imagem do alimento">
                 <div class="md-list-item-text" layout="column">
                     <h3 class="list-line-1-height-fix">
                         <strong>
-                            {{ item.name }}
+                            {{ item.first.name }}
                             <md-tooltip md-direction="top" md-z-index="1000">Nome</md-tooltip>
                         </strong>
                         <span class="custom-label-2" md-colors="{background: 'blue-grey'}">
-                            {{ item.category | enumDescription: vm.categories }}
+                            {{ item.first.category | enumDescription: vm.categories }}
                             <md-tooltip md-direction="top" md-z-index="1000">Categoria</md-tooltip>
                         </span>
                     </h3>
-                    <h4 class="list-line-2-height-fix">{{ vm.formatOtherNames(item) }}</h4>
+                    <h4 class="list-line-2-height-fix">{{ vm.formatOtherNames(item.first) }}</h4>
                     <p class="list-line-3">
-                        <span class="custom-label" md-colors="{background: 'brown'}" ng-if="item.calories">
-                            {{ item.calories }} Kcal
+                        <span class="custom-label" md-colors="{background: 'brown'}" ng-if="item.first.calories">
+                            {{ item.first.calories }} Kcal
                             <md-tooltip md-direction="bottom" md-z-index="1000">Valor calórico</md-tooltip>
                         </span>
-                        <span class="custom-label" md-colors="{background: 'teal'}" ng-if="item.carbs">
-                            <span class="custom-label-title">C</span> {{ item.carbs }}g
+                        <span class="custom-label" md-colors="{background: 'teal'}" ng-if="item.first.carbs">
+                            <span class="custom-label-title">C</span> {{ item.first.carbs }}g
                             <md-tooltip md-direction="bottom" md-z-index="1000">Carboidratos</md-tooltip>
                         </span>
-                        <span class="custom-label" md-colors="{background: 'indigo'}" ng-if="item.proteins">
-                            <span class="custom-label-title">P</span> {{ item.proteins }}g
+                        <span class="custom-label" md-colors="{background: 'indigo'}" ng-if="item.first.proteins">
+                            <span class="custom-label-title">P</span> {{ item.first.proteins }}g
                             <md-tooltip md-direction="bottom" md-z-index="1000">Proteínas</md-tooltip>
                         </span>
-                        <span class="custom-label" md-colors="{background: 'deep-purple'}" ng-if="item.lipids">
-                            <span class="custom-label-title">L</span> {{ item.lipids }}g
+                        <span class="custom-label" md-colors="{background: 'deep-purple'}" ng-if="item.first.lipids">
+                            <span class="custom-label-title">L</span> {{ item.first.lipids }}g
                             <md-tooltip md-direction="bottom" md-z-index="1000">Lipídios</md-tooltip>
                         </span>
                     </p>
                 </div>
                 <div class="md-list-item-text fixed-width-30" layout="column" layout-align="center end">
-                    <md-icon md-svg-icon="food-apple" id="icon-list-top" ng-if="item.relatedFood.length > 0">
+                    <md-icon md-svg-icon="food-apple" id="icon-list-top" ng-if="item.first.relatedFood.length > 0">
                         <md-tooltip md-direction="top" md-z-index="1000">Alimentos relacionados</md-tooltip>
                     </md-icon>
-                    <md-icon md-svg-icon="flask-outline" id="icon-list-bottom" ng-if="item.containedSubstances.length > 0">
+                    <md-icon md-svg-icon="flask-outline" id="icon-list-bottom" ng-if="item.first.containedSubstances.length > 0">
                         <md-tooltip md-direction="bottom" md-z-index="1000">Substâncias contidas</md-tooltip>
                     </md-icon>
                 </div>
                 <div class="md-list-item-text" layout="column" flex>
-                    <md-chips class="small-chips" ng-model="item.relatedFood" readonly="true">
+                    <md-chips class="small-chips" ng-model="item.first.relatedFood" readonly="true">
                         <md-chip-template>{{ $chip.name }}</md-chip-template>
                     </md-chips>
-                    <md-chips class="small-chips" ng-model="item.containedSubstances" readonly="true">
+                    <md-chips class="small-chips" ng-model="item.first.containedSubstances" readonly="true">
                         <md-chip-template>{{ $chip.name }}</md-chip-template>
                     </md-chips>
                 </div>
-                <md-icon class="md-secondary" md-svg-icon="send" ng-click="vm.replaceFood(item)" md-colors="{fill: 'red'}"></md-icon>
+                <md-icon class="md-secondary" md-svg-icon="send" ng-click="vm.replaceFood(item.first)" md-colors="{fill: 'indigo'}"></md-icon>
             </md-list-item>            
         </md-list>
     </md-card>
+
+    <warning-box message="Alimento desejado não encontrado? Deseja sugerir que o alimento seja adicionado?" ng-if="vm.results && vm.results.length > 0">
+        <md-button ng-click="vm.suggestInclusion()" layout-align="center" class="centered-element">Sugerir inclusão</md-button>
+    </warning-box>
+
 </md-content>

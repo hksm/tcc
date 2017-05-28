@@ -33,6 +33,7 @@
 		function cleanForm(form) {
 			vm.substance = {
 				name: undefined,
+				otherNames: [],
 				containedInFood: []
 			};
 			vm.searchTextFood = '';

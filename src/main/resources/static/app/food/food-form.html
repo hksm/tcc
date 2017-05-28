@@ -1,6 +1,6 @@
 <md-content layout-padding>
     <md-card>
-        <form name="foodForm">
+        <form name="foodForm" flow-init>
             <md-card-title>
                 <md-card-title-text>
                     <span class="md-headline">{{vm.food.id ? 'Editando alimento' : 'Cadastro de alimentos'}}</span>
@@ -9,8 +9,22 @@
             
             <md-card-content>
 
-                <div layout="row" layout-padding>
-                    <img ng-src="http://placehold.it/150x150" alt="Imagem do alimento" flex="30">
+                 <div flex="100" layout="row" layout-padding> 
+                    <div
+                        class="border-transition border-invisible-2px"
+                        style="text-align: center;"
+                        flex="30"
+                        layout="column"
+                        layout-align="center center"
+                        flow-drop
+                        flow-drag-enter="style={border:'2px solid #0f0'}"
+                        flow-drag-leave="style={border:'2px solid #fff'}">
+ 
+                        <img ng-if="!$flow.files.length" ng-src="http://placehold.it/450x450">
+                        <img ng-if="$flow.files.length" flow-img="$flow.files[0]">
+ 
+                        <span ng-if="!$flow.files.length">Arraste um arquivo para definir como imagem</span>
+                    </div>
 
                     <div flex>
                         <div layout-gt-sm="row">
@@ -106,7 +120,7 @@
             </md-card-content>
             
             <md-card-actions layout="row" layout-align="end center">
-                <md-button class="md-raised md-primary" ng-click="vm.save(vm.food, foodForm)" ng-disabled="foodForm.$invalid">Salvar</md-button>
+                <md-button class="md-raised md-primary" ng-click="vm.save(vm.food, foodForm, $flow)" ng-disabled="foodForm.$invalid">Salvar</md-button>
                 <md-button class="md-raised" ng-click="vm.save(vm.food, foodForm, true)" ng-disabled="foodForm.$invalid">Salvar e adicionar outro</md-button>
                 <md-button class="md-raised" ng-click="vm.cleanForm(foodForm)">Limpar</md-button>
             </md-card-actions>

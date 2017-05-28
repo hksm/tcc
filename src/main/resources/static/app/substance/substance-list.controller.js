@@ -4,22 +4,27 @@
 
 	angular.module('tcc').controller('SubstanceListController', Controller);
 
-	Controller.$inject = ['EnumsService', '$mdDialog', '$mdToast', 'SubstanceService', '$q', '$location'];
+	Controller.$inject = ['EnumsService', '$mdDialog', '$mdToast', 'SubstanceService', '$q', '$location', '$mdPanel'];
 
-	function Controller(EnumsService, $mdDialog, $mdToast, SubstanceService, $q, $location) {
+	function Controller(EnumsService, $mdDialog, $mdToast, SubstanceService, $q, $location, $mdPanel) {
 		var vm = this;
 
 		vm.edit = edit;
 		vm.remove = remove;
 		vm.loadPage = loadPage;
+		vm.formatOtherNames = formatOtherNames;
+		vm.viewFilters = viewFilters;
 
 		vm.selectedRows = [];
 
 		vm.query = {
 			sort: 'name',
 			size: 10,
-			page: 1
+			page: 1,
+			filter: ''
 		};
+
+		vm.filters = {};
 
 		(function init() {
 			loadEnums();
@@ -64,6 +69,41 @@
 				});
 				
 			});
+		}
+
+		function formatOtherNames(names) {
+			if (!names) {
+				return '';
+			}
+			return names.join(', ');
+		}
+
+
+
+		function viewFilters() {
+			var position = $mdPanel.newPanelPosition().absolute().center();
+
+			var config = {
+				attachTo: angular.element(document.body),
+				controller: 'SubstanceFiltersController',
+				controllerAs: 'vm',
+				disableParentScroll: true,
+				templateUrl: '/app/substance/substance-filters.html',
+				hasBackdrop: true,
+				position: position,
+				panelClass: 'filters-dialog',
+				trapFocus: true,
+				zIndex: 150,
+				clickOutsideToClose: true,
+				escapeToClose: true,
+				focusOnOpen: true,
+				locals: {
+					query: vm.query,
+					filters: vm.filters
+				}
+			};
+
+			$mdPanel.open(config);
 		}
 
 	}

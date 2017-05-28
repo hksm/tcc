@@ -2,7 +2,7 @@
 
 	'use strict';
 
-	angular.module('tcc').controller('FoodFiltersController', Controller);
+	angular.module('tcc').controller('SubstanceFiltersController', Controller);
 
 	Controller.$inject = [];
 
@@ -18,16 +18,12 @@
 		})();
 
 		function parseFilter() {
-			vm.filters.categories = vm.categories.filter(c => c.filtered);
 			var arr = [];
 			if (vm.filters.name) {
-				arr.push('name==*' + vm.filters.name + '*');
+				arr.push('(name==\'*' + vm.filters.name + '*\' or otherNames==\'*' + vm.filters.name + '*\')');
 			}
 			if (vm.filters.isAlergenic) {
 				arr.push('alergenic==true');
-			}
-			if (vm.filters.categories) {
-				arr.push('category=in=(' + vm.filters.categories.map(c => c.enum) + ')');
 			}
 			vm.query.filter = arr.join(' ' + vm.filters.mode + ' ');
 		}

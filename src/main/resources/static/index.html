@@ -30,7 +30,31 @@
 
                         <h2 md-truncate flex>{{vm.mainTitle}}</h2>
 
-                        <md-button class="md-icon-button" aria-label="Notifications">
+                        <md-button class="md-icon-button" ng-click="vm.openSearch()" aria-label="Pesquisar">
+                            <ng-md-icon icon="search"></ng-md-icon>
+                        </md-button>
+
+                        <md-menu md-position-mode="target-right bottom" ng-if="user.roleAdmin">
+                            <md-button class="md-icon-button" aria-label="User" ng-click="$mdMenu.open($event)">
+                                <md-icon md-svg-icon="plus"></md-icon>
+                            </md-button>
+                            <md-menu-content width="4">
+                                <md-menu-item>
+                                    <md-button ng-href="/food/form">
+                                        <md-icon md-svg-icon="food-apple"></md-icon>
+                                        Alimento
+                                    </md-button>
+                                </md-menu-item>
+                                <md-menu-item>
+                                    <md-button ng-href="/substance/form">
+                                        <md-icon md-svg-icon="flask-outline"></md-icon>
+                                        Substância
+                                    </md-button>
+                                </md-menu-item>
+                            </md-menu-content>
+                        </md-menu>
+
+                        <md-button class="md-icon-button notifications-menu bell-notifications" ng-click="vm.showNotifications($event)" aria-label="Notificações" ng-class="{'bell-notif-1': notificationsCount === 1, 'bell-notif-2': notificationsCount === 2, 'bell-notif-3': notificationsCount === 3, 'bell-notif-4': notificationsCount === 4, 'bell-notif-5': notificationsCount === 5, 'bell-notif-5p': notificationsCount > 5}">
                             <ng-md-icon icon="notifications"></ng-md-icon>
                         </md-button>
 
@@ -76,34 +100,63 @@
                             <input id="searchInput" ng-model="vm.searchTerm" ng-model-options="{ debounce: 500 }" ng-change="vm.searchFoodByTerm(vm.searchTerm)" aria-label="Pesquisar alimento">
                         </md-input-container>
 
+                        <md-menu md-position-mode="target-right bottom" ng-if="user.roleAdmin">
+                            <md-button class="md-icon-button" aria-label="User" ng-click="$mdMenu.open($event)">
+                                <md-icon md-svg-icon="plus" class="fill-black"></md-icon>
+                            </md-button>
+                            <md-menu-content width="4">
+                                <md-menu-item>
+                                    <md-button ng-href="/food/form">
+                                        <md-icon md-svg-icon="food-apple"></md-icon>
+                                        Alimento
+                                    </md-button>
+                                </md-menu-item>
+                                <md-menu-item>
+                                    <md-button ng-href="/substance/form">
+                                        <md-icon md-svg-icon="flask-outline"></md-icon>
+                                        Substância
+                                    </md-button>
+                                </md-menu-item>
+                            </md-menu-content>
+                        </md-menu>
+
                         <md-button class="md-icon-button" aria-label="Notifications">
                             <ng-md-icon icon="notifications"></ng-md-icon>
-                        </md-button>
+                            <div>5</div>
+                        </md-button>                        
 
-                        <md-button class="md-icon-button" aria-label="User">
-                            <ng-md-icon icon="person"></ng-md-icon>
-                        </md-button>
+                        <md-menu md-position-mode="target-right bottom">
+                            <md-button class="md-icon-button" aria-label="User" ng-click="$mdMenu.open($event)">
+                                <ng-md-icon icon="person"></ng-md-icon>
+                            </md-button>
+                            <md-menu-content width="4">
+                                <md-menu-item ng-if="!user.roleUser">
+                                    <md-button ng-href="/login">
+                                        <md-icon md-svg-icon="login"></md-icon>
+                                        Entrar
+                                    </md-button>
+                                </md-menu-item>
+                                <md-menu-item ng-if="!user.roleUser">
+                                    <md-button ng-href="/register">
+                                        <md-icon md-svg-icon="account-plus"></md-icon>
+                                        Registrar
+                                    </md-button>
+                                </md-menu-item>
+                                <md-menu-item ng-if="user.roleUser">
+                                    <md-button ng-href="/logout" ng-click="vm.logout()">
+                                        <md-icon md-svg-icon="logout"></md-icon>
+                                        Sair
+                                    </md-button>
+                                </md-menu-item>
+                            </md-menu-content>
+                        </md-menu>
                     </div>
                 </md-toolbar>
 
                 <ng-view layout="column" flex></ng-view>
             </md-content>
 
-        </div>
-
-        <div ng-hide="vm.isLoginOrSignUp() || !user.roleAdmin">
-            <md-button class="md-fab md-primary md-fab-bottom-right md-mini" ng-class="{'md-fab-small-1': vm.isRoute('substance/form'), 'md-fab-small-2': !vm.isRoute('substance/form')}" aria-label="Pesquisar" ng-click="vm.goToForm('food')" ng-hide="vm.isRoute('food/form') || vm.searching" md-colors="{background: 'blue'}">
-                <md-icon md-svg-icon="food-apple"></md-icon>
-            </md-button>
-
-            <md-button class="md-fab md-primary md-fab-bottom-right md-mini md-fab-small-1" aria-label="Pesquisar" ng-click="vm.goToForm('substance')" ng-hide="vm.isRoute('substance/form') || vm.searching" md-colors="{background: 'green'}">
-                <md-icon md-svg-icon="flask-outline"></md-icon>
-            </md-button>
-
-            <md-button class="md-fab md-primary md-fab-bottom-right" aria-label="Pesquisar" ng-click="vm.openSearch()" ng-hide="vm.searching" md-colors="{background: 'indigo'}">
-                <ng-md-icon icon="search"></ng-md-icon>
-            </md-button>
-        </div>        
+        </div>       
 
     </div>
 
@@ -119,11 +172,14 @@
     <script src="/node_modules/angular-material-icons/angular-material-icons.js"></script>
     <script src="/node_modules/angular-material-data-table/dist/md-data-table.js"></script>
     <script src="/node_modules/meanie-angular-focus/release/meanie-angular-focus.js"></script>
+    <script src="/node_modules/@flowjs/flow.js/dist/flow.js"></script>
+    <script src="/node_modules/@flowjs/ng-flow/dist/ng-flow.js"></script>
 
     <script src="/app/app.js"></script>
     <script src="/app/app.constants.js"></script>
     <script src="/app/app.config.js"></script>
 
+    <script src="/app/utils/warning-box.directive.js"></script>
     <script src="/app/utils/numbers-only.directive.js"></script>
     <script src="/app/utils/listbox-options.directive.js"></script>
     <script src="/app/utils/autocomplete-with-button.directive.js"></script>
@@ -144,6 +200,9 @@
 
     <script src="/app/profile/profile.service.js"></script>
     <script src="/app/profile/profile.controller.js"></script>
+    
+    <script src="/app/notification/notification.service.js"></script>
+    <script src="/app/notification/notification.controller.js"></script>
 
     <script src="/app/search/replace.service.js"></script>
     <script src="/app/search/search-list.controller.js"></script>
@@ -157,6 +216,7 @@
     <script src="/app/substance/substance.service.js"></script>
     <script src="/app/substance/substance-form.controller.js"></script>
     <script src="/app/substance/substance-list.controller.js"></script>
+    <script src="/app/substance/substance-filters.controller.js"></script>
 </body>
 
 </html>
