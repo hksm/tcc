@@ -19,6 +19,9 @@ public class Image {
     @NotNull
     private String filename;
 
+    @NotNull
+    private String mimeType;
+
     @Lob
     @NotNull
     private byte[] image;
@@ -26,9 +29,10 @@ public class Image {
     public Image() {
     }
 
-    public Image(Long id, String filename, byte[] image) {
+    public Image(Long id, String filename, String mimeType, byte[] image) {
         this.id = id;
         this.filename = filename;
+        this.mimeType = mimeType;
         this.image = image;
     }
 
@@ -54,5 +58,13 @@ public class Image {
 
     public void setFilename(String filename) {
         this.filename = filename;
+    }
+
+    public String getMimeType() {
+        return mimeType;
+    }
+
+    public void setMimeType(String mimeType) {
+        this.mimeType = mimeType;
     }
 }

@@ -1,6 +1,6 @@
 <md-content layout-padding>
     <md-card>
-        <form name="foodForm" flow-init>
+        <form name="foodForm">
             <md-card-title>
                 <md-card-title-text>
                     <span class="md-headline">{{vm.food.id ? 'Editando alimento' : 'Cadastro de alimentos'}}</span>
@@ -9,23 +9,23 @@
             
             <md-card-content>
 
-                 <div flex="100" layout="row" layout-padding> 
+                <div layout="row" layout-padding>
                     <div
                         class="border-transition border-invisible-2px"
                         style="text-align: center;"
                         flex="30"
                         layout="column"
                         layout-align="center center"
-                        flow-drop
-                        flow-drag-enter="style={border:'2px solid #0f0'}"
-                        flow-drag-leave="style={border:'2px solid #fff'}">
- 
-                        <img ng-if="!$flow.files.length" ng-src="http://placehold.it/450x450">
-                        <img ng-if="$flow.files.length" flow-img="$flow.files[0]">
- 
-                        <span ng-if="!$flow.files.length">Arraste um arquivo para definir como imagem</span>
-                    </div>
+                        ng-style="style">
+                        
+                        <div ngf-drop ng-model="picFile" ngf-pattern="image/*" class="cropArea">
+                            <img-crop image="picFile  | ngfDataUrl" result-image="croppedDataUrl" ng-init="croppedDataUrl=''"></img-crop>
+                        </div>
+            
+                        <md-button style="margin-top: 10px;" ngf-select ng-model="picFile" accept="image/*">Selecionar imagem</md-button>
 
+                    </div>
+                    
                     <div flex>
                         <div layout-gt-sm="row">
                             <md-input-container class="md-block" flex-gt-sm>

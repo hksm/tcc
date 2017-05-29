@@ -4,11 +4,11 @@
 
 	angular.module('tcc').controller('FoodFormController', Controller);
 
-	Controller.$inject = ['FoodService', 'SubstanceService', 'EnumsService', '$mdDialog', '$mdToast', '$mdPanel', '$q', '$location', '$focus', 'foodRequest'];
+	Controller.$inject = ['$scope', 'FoodService', 'SubstanceService', 'ImageService', 'EnumsService', '$mdDialog', '$mdToast', '$mdPanel', '$q', '$location', '$focus', 'foodRequest'];
 
-	function Controller(FoodService, SubstanceService, EnumsService, $mdDialog, $mdToast, $mdPanel, $q, $location, $focus, foodRequest) {
+	function Controller($scope, FoodService, SubstanceService, ImageService, EnumsService, $mdDialog, $mdToast, $mdPanel, $q, $location, $focus, foodRequest) {
 		var vm = this;
-		
+    		
 		vm.transformTag = transformTag;
 		vm.save = save;
 		vm.queryFood = queryFood;
@@ -17,10 +17,17 @@
 
 		vm.categories = [];
 
+		$scope.$watch('picFile', a => console.log(a));
+
 		(function init() {
 			loadEnums();
 			if (foodRequest && foodRequest.data) {
 				vm.food = foodRequest.data;
+				if (foodRequest.data.imageId) {
+					ImageService.get(foodRequest.data.imageId).then(function(response) {
+						$scope.picFile = new File([response.data.image], response.data.filename);
+					});
+				}
 			} else {
 				cleanForm();
 			}
@@ -54,21 +61,27 @@
 		}
 
 		function save(food, form, remain) {
-			return FoodService.save(food).then(function(response) {
-				if (response.status === 200 || response.status === 204) {
-					$mdToast.show($mdToast.simple().textContent("Alimento salvo com sucesso").position('top right'));
-					if (remain) {
-						cleanForm(form);
-						$focus('nameInput');
-					} else {
-						$location.path('/food/list');
-					}
-				} else {
-					$mdToast.show($mdToast.simple().textContent("Ocorreu um erro ao salvar o alimento").position('top right'));
+			return ImageService.post($scope.croppedDataUrl).then(function(response) {
+				if (response.data && response.data.id) {
+					food.imageId = response.data.id;
 				}
-			}, function() {
-				$mdToast.show($mdToast.simple().textContent("Ocorreu um erro ao salvar o alimento").position('top right'));
-			});
+			}).finally(function() {
+				FoodService.save(food).then(function(response) {
+					if (response.status === 200 || response.status === 204) {
+						$mdToast.show($mdToast.simple().textContent("Alimento salvo com sucesso").position('top right'));
+						if (remain) {
+							cleanForm(form);
+							$focus('nameInput');
+						} else {
+							$location.path('/food/list');
+						}
+					} else {
+						$mdToast.show($mdToast.simple().textContent("Ocorreu um erro ao salvar o alimento").position('top right'));
+					}
+				}, function() {
+					$mdToast.show($mdToast.simple().textContent("Ocorreu um erro ao salvar o alimento").position('top right'));
+				});
+			}); 
 		}
 
 		function queryFood(string) {

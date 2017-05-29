@@ -429,3 +429,10 @@ md-toolbar .sidebar-brand {
 .bell-notif-4:before { content: '4'; }
 .bell-notif-5:before { content: '5'; }
 .bell-notif-5p:before { content: '5+'; }
+
+.cropArea {
+    background: #E4E4E4;
+    overflow: hidden;
+    width:500px;
+    height:350px;
+}

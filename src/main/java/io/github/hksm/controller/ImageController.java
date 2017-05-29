@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -20,13 +22,13 @@ public class ImageController {
     @Autowired
     private ImageRepositoy imageRepositoy;
 
-    @PostMapping
+    @PostMapping()
     public ResponseEntity<?> add(@RequestParam("file") MultipartFile file) {
         if (file.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
         try {
-            Image image = new Image(null, file.getOriginalFilename(), file.getBytes());
+            Image image = new Image(null, file.getOriginalFilename(), file.getContentType(), file.getBytes());
             Image persisted = imageRepositoy.save(image);
             if (Objects.nonNull(persisted)) {
                 return ResponseEntity.ok(persisted);
@@ -38,10 +40,25 @@ public class ImageController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getOne(@PathVariable("id") long id) {
-        Image Image = imageRepositoy.findOne(id);
-        if (Objects.nonNull(Image)) {
-            return ResponseEntity.ok(Image);
+    public void serve(@PathVariable("id") long id, HttpServletResponse response) throws IOException {
+        Image image = imageRepositoy.findOne(id);
+        if (Objects.nonNull(image)) {
+            response.setHeader("Cache-Control", "no-store");
+            response.setHeader("Pragma", "no-cache");
+            response.setDateHeader("Expires", 0);
+            response.setContentType(image.getMimeType());
+            ServletOutputStream responseOutputStream = response.getOutputStream();
+            responseOutputStream.write(image.getImage());
+            responseOutputStream.flush();
+            responseOutputStream.close();
+        }
+    }
+
+    @GetMapping("/entity/{id}")
+    public ResponseEntity<?> get(@PathVariable("id") long id) throws IOException {
+        Image image = imageRepositoy.findOne(id);
+        if (Objects.nonNull(image)) {
+            return ResponseEntity.ok(image);
         }
         return ResponseEntity.noContent().build();
     }

@@ -7,7 +7,9 @@
     <md-card ng-repeat="item in vm.results">
         <md-list flex ng-class="{'red-strip': item.second === 'DANGER', 'orange-strip': item.second === 'WARNING', 'green-strip': item.second === 'SAFE'}">
             <md-list-item class="md-3-line">
-                <img ng-src="http://placehold.it/40x40" class="md-avatar" alt="Imagem do alimento">
+                <!--<img ng-src="http://placehold.it/40x40" class="md-avatar" alt="Imagem do alimento">-->
+                <span style="margin-right: 10px;"><ng-letter-avatar class="md-avatar" style="margin-right: 10px;" shape="round" data="{{ item.first.name }}"></ng-letter-avatar></span>
+                <img ng-src="/images/">
                 <div class="md-list-item-text" layout="column">
                     <h3 class="list-line-1-height-fix">
                         <strong>

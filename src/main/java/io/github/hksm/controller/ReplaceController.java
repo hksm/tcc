@@ -47,10 +47,19 @@ public class ReplaceController {
         }
         String username = AuthUtils.getLoggedUsername(request.getHeader("Authorization").substring(7));
         Profile profile = profileRepository.findOne(QProfile.profile.userData.username.eq(username));
-        Set<Long> foodSet = profile.getFood().stream().map(Food::getId).collect(Collectors.toSet());
-        foodSet.add(0L);
-        Set<Long> subsSet = profile.getSubstance().stream().map(Substance::getId).collect(Collectors.toSet());
-        subsSet.add(0L);
+
+        Set<Long> foodSet;
+        Set<Long> subsSet;
+
+        if (profile != null) {
+            foodSet = profile.getFood().stream().map(Food::getId).collect(Collectors.toSet());
+            foodSet.add(0L);
+            subsSet = profile.getSubstance().stream().map(Substance::getId).collect(Collectors.toSet());
+            subsSet.add(0L);
+        } else {
+            foodSet = Collections.singleton(0L);
+            subsSet = Collections.singleton(0L);
+        }
 
         for (int i = 5; i <= 15; i += 5) {
             List<Pair<Food, BigDecimal>> list = getReplacementList(food, QFood.food.id.notIn(foodSet).and(

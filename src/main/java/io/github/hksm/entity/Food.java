@@ -47,6 +47,8 @@ public class Food {
 
     private BigDecimal lipids;
 
+    private long imageId;
+
     @JsonIgnoreProperties(value = {"relatedFood", "containedSubstances", "tags"}, allowSetters = true)
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "food_related_food",
@@ -68,8 +70,8 @@ public class Food {
     public Food() {
     }
 
-    public Food(Long id, String name, Set<String> otherNames, boolean isAlergenic, Category category, BigDecimal quantity,
-                Unit unit, BigDecimal calories, BigDecimal carbs, BigDecimal proteins, BigDecimal lipids, Set<Food> relatedFood,
+    public Food(Long id, String name, Set<String> otherNames, boolean isAlergenic, Category category, BigDecimal quantity, Unit unit,
+                BigDecimal calories, BigDecimal carbs, BigDecimal proteins, BigDecimal lipids, long imageId, Set<Food> relatedFood,
                 Set<Substance> containedSubstances) {
         this.id = id;
         this.name = name;
@@ -82,6 +84,7 @@ public class Food {
         this.carbs = carbs;
         this.proteins = proteins;
         this.lipids = lipids;
+        this.imageId = imageId;
         this.relatedFood = relatedFood;
         this.containedSubstances = containedSubstances;
     }
@@ -194,6 +197,14 @@ public class Food {
         return new Builder();
     }
 
+    public long getImageId() {
+        return imageId;
+    }
+
+    public void setImageId(long imageId) {
+        this.imageId = imageId;
+    }
+
     public static class Builder {
         private Long id;
         private String name;
@@ -206,6 +217,7 @@ public class Food {
         private BigDecimal carbs;
         private BigDecimal proteins;
         private BigDecimal lipids;
+        private long imageId;
         private Set<Food> relatedFood;
         private Set<Substance> containedSubstances;
 
@@ -214,11 +226,16 @@ public class Food {
 
         public Food build() {
             return new Food(id, name, otherNames, isAlergenic, category, quantity, unit, calories, carbs, proteins,
-                    lipids, relatedFood, containedSubstances);
+                    lipids, imageId, relatedFood, containedSubstances);
         }
 
         public Builder id(Long id) {
             this.id = id;
+            return this;
+        }
+
+        public Builder imageId(long imageId) {
+            this.imageId = imageId;
             return this;
         }
 

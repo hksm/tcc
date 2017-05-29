@@ -2,7 +2,7 @@
 
 	'use strict';
 
-	angular.module('tcc').config(function($routeProvider, $locationProvider, $mdThemingProvider, $mdIconProvider, flowFactoryProvider) {
+	angular.module('tcc').config(function($routeProvider, $locationProvider, $mdThemingProvider, $mdIconProvider) {
 
 		$routeProvider
 			.when('/', {
@@ -98,13 +98,6 @@
 				.accentPalette('deep-purple');
 
 			$mdIconProvider.defaultIconSet('img/icons/mdi.svg');
-
-			flowFactoryProvider.defaults = {
-				target: '/api/images',
-				singleFile: true,
-				testChunks: false
-			};
-
 	});
 	
 })();
