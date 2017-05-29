@@ -29,14 +29,14 @@
         <md-table-container>
             <table md-table md-row-select multiple ng-model="vm.selectedRows" md-progress="vm.loadingPromise">
                 <thead md-head md-order="vm.query.sort" md-on-reorder="vm.loadPage">
-                    <tr md-row>
+                    <tr md-row ng-disabled="!user.roleAdmin">
                         <th md-column md-order-by="name"><span>Nome</span></th>
                         <th md-column>Outros nomes</th>
                         <th md-column>Alergênico</th>
                     </tr>
                 </thead>
                 <tbody md-body>
-                    <tr md-row md-select="substance" md-select-id="id" md-auto-select ng-repeat="substance in vm.substancePage.content">
+                    <tr md-row md-select="substance" md-select-id="id" md-auto-select ng-repeat="substance in vm.substancePage.content" ng-disabled="!user.roleAdmin">
                         <td md-cell>{{substance.name}}</td>
                         <td md-cell>{{vm.formatOtherNames(substance.otherNames)}}</td>
                         <td md-cell>

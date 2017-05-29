@@ -53,10 +53,7 @@
 			return { description: chip };
 		}
 
-		function save(food, form, flow, remain) {
-			flow.upload().then(function(resp) {
-				console.log(resp);
-			});
+		function save(food, form, remain) {
 			return FoodService.save(food).then(function(response) {
 				if (response.status === 200 || response.status === 204) {
 					$mdToast.show($mdToast.simple().textContent("Alimento salvo com sucesso").position('top right'));

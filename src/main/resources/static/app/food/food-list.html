@@ -29,7 +29,7 @@
         <md-table-container>
             <table md-table md-row-select multiple ng-model="vm.selectedRows" md-progress="vm.loadingPromise">
                 <thead md-head md-order="vm.query.sort" md-on-reorder="vm.loadPage">
-                    <tr md-row>
+                    <tr md-row ng-disabled="!user.roleAdmin">
                         <th md-column md-order-by="name"><span>Nome</span></th>
                         <th md-column>Alergênico</th>
                         <th md-column>Categoria</th>
@@ -42,7 +42,7 @@
                     </tr>
                 </thead>
                 <tbody md-body>
-                    <tr md-row md-select="food" md-select-id="id" md-auto-select ng-repeat="food in vm.foodPage.content">
+                    <tr md-row md-select="food" md-select-id="id" md-auto-select ng-repeat="food in vm.foodPage.content" ng-disabled="!user.roleAdmin">
                         <td md-cell>{{food.name}}</td>
                         <td md-cell>
                             <ng-md-icon icon="priority_high" ng-if="food.alergenic" class="warning-red"></ng-md-icon>

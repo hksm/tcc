@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -76,7 +77,8 @@ public class ReplaceController {
         return StreamSupport.stream(it.spliterator(), false)
                 .map(f -> Pair.of(f, calcPercentDifference(food.getCarbs(), f.getCarbs())
                         .add(calcPercentDifference(food.getProteins(), f.getProteins()))
-                        .add(calcPercentDifference(food.getLipids(), f.getLipids()))))
+                        .add(calcPercentDifference(food.getLipids(), f.getLipids()))
+                        .divide(BigDecimal.valueOf(3), 1, RoundingMode.HALF_UP)))
                 .collect(Collectors.toList());
     }
 

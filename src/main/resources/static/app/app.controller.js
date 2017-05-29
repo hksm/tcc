@@ -150,7 +150,6 @@
 			var route = aux.indexOf('/') > 0 ? aux.substring(0, aux.indexOf('/')) : aux;
 			var routes = {
 				'profile': 'Perfil',
-				'history': 'Histórico',
 				'food': 'Alimentos',
 				'substance': 'Substâncias',
 				'replace': 'Substituição de alimento',

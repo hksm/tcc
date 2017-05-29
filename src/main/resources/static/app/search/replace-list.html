@@ -61,10 +61,6 @@
 
     <warning-box message="O valor nutricional do alimento não está especificado" ng-if="!vm.mainFood.calories && (!vm.mainFood.carbs || !vm.mainFood.proteins || !vm.mainFood.lipids)"></warning-box>
 
-    
-
-    
-
     <md-card ng-repeat="item in vm.results">
         <md-list flex ng-class="{'red-strip': item.third === 'DANGER', 'orange-strip': item.third === 'WARNING', 'green-strip': item.third === 'SAFE'}">
             <md-list-item class="md-3-line">
@@ -80,7 +76,7 @@
                             <md-tooltip md-direction="top" md-z-index="1000">Categoria</md-tooltip>
                         </span>
                         <span class="custom-label-2" md-colors="{background: 'blue'}">
-                            {{ (item.second / 3) | number: 1 }}% similar
+                            {{ item.second | number: 1 }}% similar
                             <md-tooltip md-direction="top" md-z-index="1000">Percentual de similaridade</md-tooltip>
                         </span>
                     </h3>

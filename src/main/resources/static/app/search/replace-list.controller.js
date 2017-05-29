@@ -36,7 +36,7 @@
 
 		function loadReplacements(food) {
 			ReplaceService.replace(food).then(function(response) {
-				response.data.sort((a,b) => a.second > b.second ? a : b);
+				response.data.sort((a,b) => a.second > b.second ? -1 : 1);
 				console.log(response.data);
 				vm.results = response.data;
 			});

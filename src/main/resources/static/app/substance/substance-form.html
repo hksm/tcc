@@ -42,7 +42,7 @@
             
             <md-card-actions layout="row" layout-align="end center">
                 <md-button class="md-raised md-primary" ng-click="vm.save(vm.substance, substanceForm)" ng-disabled="substanceForm.$invalid">Salvar</md-button>
-                <md-button class="md-raised md-primary" ng-click="vm.save(vm.substance, substanceForm, true)" ng-disabled="substanceForm.$invalid">Salvar e adicionar outro</md-button>
+                <md-button class="md-raised" ng-click="vm.save(vm.substance, substanceForm, true)" ng-disabled="substanceForm.$invalid">Salvar e adicionar outro</md-button>
                 <md-button class="md-raised" ng-click="vm.cleanForm(substanceForm)">Limpar</md-button>
             </md-card-actions>
         </form>

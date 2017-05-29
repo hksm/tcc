@@ -54,13 +54,13 @@
                             </md-menu-content>
                         </md-menu>
 
-                        <md-button class="md-icon-button notifications-menu bell-notifications" ng-click="vm.showNotifications($event)" aria-label="Notificações" ng-class="{'bell-notif-1': notificationsCount === 1, 'bell-notif-2': notificationsCount === 2, 'bell-notif-3': notificationsCount === 3, 'bell-notif-4': notificationsCount === 4, 'bell-notif-5': notificationsCount === 5, 'bell-notif-5p': notificationsCount > 5}">
+                        <md-button class="md-icon-button notifications-menu bell-notifications" ng-click="vm.showNotifications($event)" aria-label="Notificações" ng-class="{'bell-notif-1': notificationsCount === 1, 'bell-notif-2': notificationsCount === 2, 'bell-notif-3': notificationsCount === 3, 'bell-notif-4': notificationsCount === 4, 'bell-notif-5': notificationsCount === 5, 'bell-notif-5p': notificationsCount > 5}" ng-if="user.roleAdmin">
                             <ng-md-icon icon="notifications"></ng-md-icon>
                         </md-button>
 
                         <md-menu md-position-mode="target-right bottom">
                             <md-button class="md-icon-button" aria-label="User" ng-click="$mdMenu.open($event)">
-                                <ng-md-icon icon="person"></ng-md-icon>
+                             <ng-md-icon icon="person"></ng-md-icon>
                             </md-button>
                             <md-menu-content width="4">
                                 <md-menu-item ng-if="!user.roleUser">
@@ -120,9 +120,8 @@
                             </md-menu-content>
                         </md-menu>
 
-                        <md-button class="md-icon-button" aria-label="Notifications">
+                        <md-button class="md-icon-button" aria-label="Notifications" ng-if="user.roleAdmin" ng-class="{'bell-notif-1': notificationsCount === 1, 'bell-notif-2': notificationsCount === 2, 'bell-notif-3': notificationsCount === 3, 'bell-notif-4': notificationsCount === 4, 'bell-notif-5': notificationsCount === 5, 'bell-notif-5p': notificationsCount > 5}">
                             <ng-md-icon icon="notifications"></ng-md-icon>
-                            <div>5</div>
                         </md-button>                        
 
                         <md-menu md-position-mode="target-right bottom">
