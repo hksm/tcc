@@ -47,7 +47,7 @@ public class Food {
 
     private BigDecimal lipids;
 
-    private long imageId;
+    private Long imageId;
 
     @JsonIgnoreProperties(value = {"relatedFood", "containedSubstances", "tags"}, allowSetters = true)
     @ManyToMany(fetch = FetchType.LAZY)
@@ -71,7 +71,7 @@ public class Food {
     }
 
     public Food(Long id, String name, Set<String> otherNames, boolean isAlergenic, Category category, BigDecimal quantity, Unit unit,
-                BigDecimal calories, BigDecimal carbs, BigDecimal proteins, BigDecimal lipids, long imageId, Set<Food> relatedFood,
+                BigDecimal calories, BigDecimal carbs, BigDecimal proteins, BigDecimal lipids, Long imageId, Set<Food> relatedFood,
                 Set<Substance> containedSubstances) {
         this.id = id;
         this.name = name;
@@ -197,11 +197,11 @@ public class Food {
         return new Builder();
     }
 
-    public long getImageId() {
+    public Long getImageId() {
         return imageId;
     }
 
-    public void setImageId(long imageId) {
+    public void setImageId(Long imageId) {
         this.imageId = imageId;
     }
 
@@ -217,7 +217,7 @@ public class Food {
         private BigDecimal carbs;
         private BigDecimal proteins;
         private BigDecimal lipids;
-        private long imageId;
+        private Long imageId;
         private Set<Food> relatedFood;
         private Set<Substance> containedSubstances;
 
@@ -234,7 +234,7 @@ public class Food {
             return this;
         }
 
-        public Builder imageId(long imageId) {
+        public Builder imageId(Long imageId) {
             this.imageId = imageId;
             return this;
         }

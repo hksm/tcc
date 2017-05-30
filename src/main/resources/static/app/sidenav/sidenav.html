@@ -9,8 +9,8 @@
     <md-toolbar class="md-whiteframe-z2 sidebar-holder">
         <div class="sidebar-header header-cover" style="background-image: url(/img/sidenav-background.jpg);">
 	        <div class="sidebar-image">
-                <ng-letter-avatar class="md-avatar" style="margin-right: 10px;" shape="round" data="{{user.username}}"></ng-letter-avatar>
-	            <!--<img ng-src="/img/avatar-placeholder.png" class="md-avatar" alt="Imagem do perfil">-->
+                <span ng-if="!profileImageId"><ng-letter-avatar style="margin-right: 10px;" shape="round" data="{{user.username}}"></ng-letter-avatar></span>
+	            <img ng-if="profileImageId" ng-src="/api/images/{{profileImageId}}" class="md-avatar" alt="Imagem do perfil">
 	        </div>
 	        <a class="sidebar-brand" href="#foobar">
 	            {{user.username}}

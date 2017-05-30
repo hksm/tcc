@@ -1,4 +1,4 @@
-<md-content>
+<md-content class="light-padding">
 
     <warning-box message="Nenhum resultado encontrado. Deseja sugerir que o alimento seja adicionado?" ng-if="!vm.results || !vm.results.length">
         <md-button ng-click="vm.suggestInclusion()" layout-align="center" class="centered-element">Sugerir inclusão</md-button>
@@ -7,9 +7,8 @@
     <md-card ng-repeat="item in vm.results">
         <md-list flex ng-class="{'red-strip': item.second === 'DANGER', 'orange-strip': item.second === 'WARNING', 'green-strip': item.second === 'SAFE'}">
             <md-list-item class="md-3-line">
-                <!--<img ng-src="http://placehold.it/40x40" class="md-avatar" alt="Imagem do alimento">-->
-                <span style="margin-right: 10px;"><ng-letter-avatar class="md-avatar" style="margin-right: 10px;" shape="round" data="{{ item.first.name }}"></ng-letter-avatar></span>
-                <img ng-src="/images/">
+                <img ng-if="item.first && item.first.imageId" ng-src="/api/images/{{item.first.imageId}}" class="big-avatar md-avatar" alt="Imagem do alimento">
+                <span ng-if="!item.first.imageId" class="letter-avatar-fix"><ng-letter-avatar shape="round" data="{{ item.first.name }}" height="58" width="58"></ng-letter-avatar></span>
                 <div class="md-list-item-text" layout="column">
                     <h3 class="list-line-1-height-fix">
                         <strong>
@@ -62,7 +61,7 @@
         </md-list>
     </md-card>
 
-    <warning-box message="Alimento desejado não encontrado? Deseja sugerir que o alimento seja adicionado?" ng-if="vm.results && vm.results.length > 0">
+    <warning-box message="Alimento desejado não encontrado? Sugira que o alimento seja adicionado." ng-if="vm.results && vm.results.length > 0">
         <md-button ng-click="vm.suggestInclusion()" layout-align="center" class="centered-element">Sugerir inclusão</md-button>
     </warning-box>
 

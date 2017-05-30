@@ -1,9 +1,9 @@
-<md-content>
+<md-content class="light-padding">
     <md-card>
         <md-list flex>
             <md-list-item class="md-3-line">
-                <!--<img ng-src="http://placehold.it/40x40" class="md-avatar" alt="Imagem do alimento">-->
-                <span style="margin-right: 10px;"><ng-letter-avatar class="md-avatar" shape="round" data="{{ vm.mainFood.name }}"></ng-letter-avatar></span>
+                <img ng-if="vm.mainFood && vm.mainFood.imageId" ng-src="/api/images/{{vm.mainFood.imageId}}" class="big-avatar md-avatar" alt="Imagem do alimento">
+                <span ng-if="!vm.mainFood.imageId" class="letter-avatar-fix"><ng-letter-avatar shape="round" data="{{ vm.mainFood.name }}"></ng-letter-avatar></span>
                 <div class="md-list-item-text" layout="column">
                     <h3 class="list-line-1-height-fix">
                         <strong>
@@ -51,7 +51,8 @@
                         <md-chip-template>{{ $chip.name }}</md-chip-template>
                     </md-chips>
                 </div>
-                <ng-md-icon icon="star" class="md-secondary" ng-click="null" md-colors="{fill: 'amber'}"></ng-md-icon>
+                <md-icon md-svg-icon="star" class="md-secondary" ng-click="vm.favoriteAction({ first: vm.mainFood, fourth: vm.mainFoodFavoriteId })" md-colors="{fill: 'amber'}" ng-if="vm.mainFoodFavoriteId"></md-icon>
+                <md-icon md-svg-icon="star-outline" class="md-secondary" ng-click="vm.favoriteAction({ first: vm.mainFood, fourth: vm.mainFoodFavoriteId })" md-colors="{fill: 'amber'}" ng-if="!vm.mainFoodFavoriteId"></md-icon>
             </md-list-item>            
         </md-list>
     </md-card>
@@ -65,8 +66,9 @@
     <md-card ng-repeat="item in vm.results">
         <md-list flex ng-class="{'red-strip': item.third === 'DANGER', 'orange-strip': item.third === 'WARNING', 'green-strip': item.third === 'SAFE'}">
             <md-list-item class="md-3-line">
-                <!--<img ng-src="http://placehold.it/40x40" class="md-avatar" alt="Imagem do alimento">-->
-                <span style="margin-right: 10px;"><ng-letter-avatar class="md-avatar" style="margin-right: 10px;" shape="round" data="{{ item.first.name }}"></ng-letter-avatar></span>
+                <img ng-if="item.first && item.first.imageId" ng-src="/api/images/{{item.first.imageId}}" class="big-avatar md-avatar" alt="Imagem do alimento">
+                <span ng-if="!item.first.imageId" class="letter-avatar-fix"><ng-letter-avatar shape="round" data="{{ item.first.name }}"></ng-letter-avatar></span>
+                
                 <div class="md-list-item-text" layout="column">
                     <h3 class="list-line-1-height-fix">
                         <strong>
@@ -118,7 +120,7 @@
                         <md-chip-template>{{ $chip.name }}</md-chip-template>
                     </md-chips>
                 </div>
-                <ng-md-icon icon="star" class="md-secondary" ng-click="null" md-colors="{fill: 'amber'}"></ng-md-icon>
+                <ng-md-icon icon="star" class="md-secondary" ng-click="vm.favoriteAction(item)" md-colors="{fill: 'amber'}"></ng-md-icon>
             </md-list-item>            
         </md-list>
     </md-card>

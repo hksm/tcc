@@ -4,9 +4,9 @@
 
 	angular.module('tcc').controller('AppController', Controller);
 
-	Controller.$inject = ['$scope', '$mdSidenav', '$timeout', '$rootScope', '$http', '$mdMedia', '$focus', '$location', 'FoodService', 'BASE_URL_APP', 'AuthCookie', '$mdPanel', 'NotificationService'];
+	Controller.$inject = ['$scope', '$mdSidenav', '$timeout', '$rootScope', '$http', '$mdMedia', '$focus', '$location', 'FoodService', 'BASE_URL_APP', 'AuthCookie', '$mdPanel', 'NotificationService', 'ProfileService'];
 
-	function Controller($scope, $mdSidenav, $timeout, $rootScope, $http, $mdMedia, $focus, $location, FoodService, BASE_URL_APP, AuthCookie, $mdPanel, NotificationService) {
+	function Controller($scope, $mdSidenav, $timeout, $rootScope, $http, $mdMedia, $focus, $location, FoodService, BASE_URL_APP, AuthCookie, $mdPanel, NotificationService, ProfileService) {
 		var vm = this;
 		vm.openSearch = openSearch;
 		vm.goBack = goBack;
@@ -131,6 +131,18 @@
 				$rootScope.notificationsCount = response.data || 0;
 			});
 		}
+
+		$scope.$watch('user', () => {
+			getProfileImage();
+		});
+
+	    function getProfileImage() {
+	    	ProfileService.get().then(function(response) {
+	    		if (response.data && response.data.imageId) {
+	    			$rootScope.profileImageId = response.data.imageId;
+	    		}
+	    	});
+	    }
 
 	    $rootScope.$on("$locationChangeStart", function(event, next, old) {
 	    	vm.oldRoute = old;

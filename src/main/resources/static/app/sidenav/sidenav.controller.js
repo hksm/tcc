@@ -4,16 +4,14 @@
 
 	angular.module('tcc').controller('SidenavController', Controller);
 
-	Controller.$inject = ['$scope', '$mdSidenav'];
+	Controller.$inject = ['$scope', '$rootScope', '$mdSidenav'];
 
-	function Controller($scope, $mdSidenav) {
-		var vm = this;
-
-		$scope.close = function () {
-			// Component lookup should always be available since we are not using `ng-if`
+	function Controller($scope, $rootScope, $mdSidenav) {
+		
+		$scope.close = function() {
 			$mdSidenav('left').close();
-
 	    };
+
 	}
 
 })();

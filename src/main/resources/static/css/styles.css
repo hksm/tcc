@@ -271,9 +271,9 @@ md-toolbar.md-table-toolbar .md-toolbar-tools ng-md-icon {
     right: 28px !important;
 }
 
-md-list-item .md-avatar {
+.big-avatar {
     width: 58px;
-    height: 58px;    
+    height: 58px;
 }
 
 md-toolbar.sidebar-holder {
@@ -435,4 +435,25 @@ md-toolbar .sidebar-brand {
     overflow: hidden;
     width:500px;
     height:350px;
+}
+
+.letter-avatar-fix {
+    margin-right: 16px;
+    margin-top: 16px;
+    margin-bottom: 8px;
+}
+
+.padding-bottom-20 {
+    padding-bottom: 20px;
+}
+
+.small-letter-avatar {
+    margin-top: 8px;
+    margin-bottom: 8px;
+    margin-right: 16px;
+    box-sizing: content-box;
+}
+
+.light-padding {
+    padding: 8px;
 }

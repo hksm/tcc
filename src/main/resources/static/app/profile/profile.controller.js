@@ -4,9 +4,9 @@
 
 	angular.module('tcc').controller('ProfileController', Controller);
 
-	Controller.$inject = ['ProfileService', 'SubstanceService', 'FoodService', 'EnumsService', 'AuthService', '$mdToast'];
+	Controller.$inject = ['ProfileService', 'SubstanceService', 'FoodService', 'EnumsService', 'AuthService', '$mdToast', 'ImageService', '$scope'];
 
-	function Controller(ProfileService, SubstanceService, FoodService, EnumsService, AuthService, $mdToast) {
+	function Controller(ProfileService, SubstanceService, FoodService, EnumsService, AuthService, $mdToast, ImageService, $scope) {
 		var vm = this;
 
 		vm.save = save;
@@ -42,15 +42,21 @@
 		}
 
 		function save(profile) {
-			return ProfileService.save(profile).then(function(response) {
-				if (response.status === 200 || response.status === 204) {
-					$mdToast.show($mdToast.simple().textContent("Perfil salvo com sucesso").position('top right'));
-					loadProfile();
-				} else {
-					$mdToast.show($mdToast.simple().textContent("Ocorreu um erro ao salvar o perfil").position('top right'));
+			return ImageService.post($scope.croppedDataUrl).then(function(response) {
+				if (response.data && response.data.id) {
+					profile.imageId = response.data.id;
 				}
-			}, function() {
-				$mdToast.show($mdToast.simple().textContent("Ocorreu um erro ao salvar o perfil").position('top right'));
+			}).finally(function() {
+				ProfileService.save(profile).then(function(response) {
+					if (response.status === 200 || response.status === 204) {
+						$mdToast.show($mdToast.simple().textContent("Perfil salvo com sucesso").position('top right'));
+						loadProfile();
+					} else {
+						$mdToast.show($mdToast.simple().textContent("Ocorreu um erro ao salvar o perfil").position('top right'));
+					}
+				}, function() {
+					$mdToast.show($mdToast.simple().textContent("Ocorreu um erro ao salvar o perfil").position('top right'));
+				});
 			});
 		}
 

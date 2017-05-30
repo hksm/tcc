@@ -14,4 +14,24 @@
             <md-button>Action 2</md-button>
         </md-card-actions>
     </md-card>
+
+    <md-card>
+        <md-card-title>
+            <md-card-title-text>
+                <span class="md-headline">Últimos alimentos favoritos</span>
+            </md-card-title-text>
+        </md-card-title>
+        <md-list>
+            <md-list-item ng-repeat="fav in vm.favorites" class="noright">
+                <!-- <img ng-src="{{ person.img }}" class="md-avatar"> -->
+                <span class="small-letter-avatar"><ng-letter-avatar shape="round" data="{{fav.food.name}}" width="40" height="40" fontsize="24"></ng-letter-avatar></span>
+                <p>{{ fav.food.name }}</p>
+                <md-icon class="md-secondary" ng-click="vm.removeFavorite(fav)" md-svg-icon="close"></md-icon>
+            </md-list-item>
+            <md-list-item class="noright" ng-if="!vm.favorites || !vm.favorites.length">
+                <p>Nenhum alimento favorito</p>
+            </md-list-item>
+        </md-list>
+    </md-card>
+
 </md-content>

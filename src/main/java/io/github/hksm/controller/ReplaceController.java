@@ -5,10 +5,11 @@ import com.querydsl.core.types.Predicate;
 import io.github.hksm.business.FoodBusiness;
 import io.github.hksm.constant.AlergenicInfo;
 import io.github.hksm.entity.*;
+import io.github.hksm.repository.FavoriteRepository;
 import io.github.hksm.repository.FoodRepository;
 import io.github.hksm.repository.ProfileRepository;
 import io.github.hksm.util.AuthUtils;
-import io.github.hksm.util.Tuple3;
+import io.github.hksm.util.Tuple4;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,6 +37,9 @@ public class ReplaceController {
 
     @Autowired
     private ProfileRepository profileRepository;
+
+    @Autowired
+    private FavoriteRepository favoriteRepository;
 
     @Autowired
     private FoodBusiness foodBusiness;
@@ -70,8 +74,9 @@ public class ReplaceController {
                     )));
 
             if (!list.isEmpty()) {
-                List<Tuple3<Food, BigDecimal, AlergenicInfo>> listWithInfo = list.stream()
-                        .map(item -> Tuple3.of(item.getFirst(), item.getSecond(), foodBusiness.getAlergenicInfo(item.getFirst(), username)))
+                List<Tuple4<Food, BigDecimal, AlergenicInfo, Long>> listWithInfo = list.stream()
+                        .map(item -> Tuple4.of(item.getFirst(), item.getSecond(),
+                                foodBusiness.getAlergenicInfo(item.getFirst(), username), getFavorite(item.getFirst(), username)))
                         .collect(Collectors.toList());
                 return ResponseEntity.ok(listWithInfo);
             }
@@ -95,6 +100,11 @@ public class ReplaceController {
         BigDecimal leftSafe = Optional.ofNullable(left).orElse(BigDecimal.ZERO);
         BigDecimal rightSafe = Optional.ofNullable(right).orElse(BigDecimal.ZERO);
         return leftSafe.min(rightSafe).divide(leftSafe.max(rightSafe), MathContext.DECIMAL128).multiply(BigDecimal.valueOf(100));
+    }
+
+    private Long getFavorite(Food food, String username) {
+        return Optional.ofNullable(favoriteRepository.findOne(QFavorite.favorite.food.id.eq(food.getId())
+                .and(QFavorite.favorite.userData.username.eq(username)))).map(Favorite::getId).orElse(null);
     }
 
 }

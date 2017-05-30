@@ -24,7 +24,7 @@ public class Profile {
     @NotNull
     private String fullName;
 
-    private long imageId;
+    private Long imageId;
 
     @JsonIgnoreProperties(value = {"relatedFood", "containedSubstances", "tags"}, allowSetters = true)
     @ManyToMany(fetch = FetchType.LAZY)
@@ -47,7 +47,7 @@ public class Profile {
     public Profile() {
     }
 
-    public Profile(Long id, UserData userData, String fullName, long imageId, Set<Food> food, Set<Substance> substance) {
+    public Profile(Long id, UserData userData, String fullName, Long imageId, Set<Food> food, Set<Substance> substance) {
         this.id = id;
         this.userData = userData;
         this.fullName = fullName;
@@ -96,11 +96,11 @@ public class Profile {
         this.substance = substance;
     }
 
-    public long getImageId() {
+    public Long getImageId() {
         return imageId;
     }
 
-    public void setImageId(long imageId) {
+    public void setImageId(Long imageId) {
         this.imageId = imageId;
     }
 
@@ -115,7 +115,7 @@ public class Profile {
         private String fullName;
         private Set<Food> food;
         private Set<Substance> substance;
-        private long imageId;
+        private Long imageId;
 
         private Builder() {
         }
