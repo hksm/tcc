@@ -64,8 +64,7 @@ public class ReplaceController {
             foodSet = Collections.singleton(0L);
             subsSet = Collections.singleton(0L);
         }
-
-        for (int i = 5; i <= 15; i += 5) {
+        for (int i : new int[]{10, 20, 35}) {
             List<Pair<Food, BigDecimal>> list = getReplacementList(food, QFood.food.id.notIn(foodSet).and(
                     QFood.food.relatedFood.any().id.notIn(foodSet).or(QFood.food.relatedFood.isEmpty())).and(
                     QFood.food.containedSubstances.any().id.notIn(subsSet).or(QFood.food.containedSubstances.isEmpty())).and(
@@ -99,6 +98,12 @@ public class ReplaceController {
     private BigDecimal calcPercentDifference(BigDecimal left, BigDecimal right) {
         BigDecimal leftSafe = Optional.ofNullable(left).orElse(BigDecimal.ZERO);
         BigDecimal rightSafe = Optional.ofNullable(right).orElse(BigDecimal.ZERO);
+        if (rightSafe.compareTo(BigDecimal.ZERO) == 0 && leftSafe.compareTo(BigDecimal.ZERO) == 0) {
+            return BigDecimal.valueOf(100);
+        }
+        if (rightSafe.compareTo(BigDecimal.ZERO) == 0 || leftSafe.compareTo(BigDecimal.ZERO) == 0) {
+            return BigDecimal.ZERO;
+        }
         return leftSafe.min(rightSafe).divide(leftSafe.max(rightSafe), MathContext.DECIMAL128).multiply(BigDecimal.valueOf(100));
     }
 

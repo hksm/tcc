@@ -17,6 +17,8 @@
 		vm.logout = logout;
 		vm.showNotifications = showNotifications;
 
+		$rootScope.openSearch = openSearch;
+
 		$scope.toggleLeft = buildDelayedToggler('left');
 
 		vm.openSidenav = buildDelayedToggler('left');

@@ -71,20 +71,6 @@
 
                 <div layout-gt-sm="row">
                     <md-input-container class="md-block" flex-gt-sm>
-                        <label>Quantidade</label>
-                        <input ng-model="vm.food.quantity" numbers-only integer="10" decimal="2">
-                    </md-input-container>
-
-                    <md-input-container class="md-block" flex-gt-sm>
-                        <label>Categoria</label>
-                        <md-select ng-model="vm.food.unit">
-                            <md-option ng-repeat="unit in vm.units" ng-value="unit.enum">
-                                {{unit.name}}
-                            </md-option>
-                        </md-select>
-                    </md-input-container>
-
-                    <md-input-container class="md-block" flex-gt-sm>
                         <label>Valor calórico</label>
                         <input ng-model="vm.food.calories" numbers-only integer="10" decimal="2" append-unit="Kcal" append-location="after">
                     </md-input-container>

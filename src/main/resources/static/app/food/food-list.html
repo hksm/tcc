@@ -33,8 +33,6 @@
                         <th md-column md-order-by="name"><span>Nome</span></th>
                         <th md-column>Alergênico</th>
                         <th md-column>Categoria</th>
-                        <th md-column md-numeric>Quantidade</th>
-                        <th md-column>Unidade</th>
                         <th md-column md-numeric>Calorias (Kcal)</th>
                         <th md-column md-numeric>Carbs (g)</th>
                         <th md-column md-numeric>Proteínas (g)</th>
@@ -49,8 +47,6 @@
                             <ng-md-icon icon="remove" ng-if="!food.alergenic" class="standard-gray"></ng-md-icon>
                         </td>
                         <td md-cell>{{food.category | enumDescription: vm.categories}}</td>
-                        <td md-cell>{{food.quantity}}</td>
-                        <td md-cell>{{food.unit | enumDescription: vm.units}}</td>
                         <td md-cell>{{food.calories}}</td>
                         <td md-cell>{{food.carbs}}</td>
                         <td md-cell>{{food.proteins}}</td>
