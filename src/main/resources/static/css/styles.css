@@ -457,3 +457,8 @@ md-toolbar .sidebar-brand {
 .light-padding {
     padding: 8px;
 }
+
+.max-width-50 {
+    max-width: 50%;
+    margin: auto;
+}

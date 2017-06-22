@@ -1,5 +1,5 @@
 <md-content class="light-padding" layout-xs="column" layout="row">
-    <div flex-xs flex-gt-xs="50" layout="column" class="light-padding">
+    <div flex-xs flex-gt-xs layout="column" class="light-padding" ng-class="{'max-width-50': !user.roleUser}">
         <md-card style="min-width: 95%;">
             <img ng-src="/img/home-header.jpg" class="md-card-image" alt="Alimentos alergênicos">
             <md-card-title>
@@ -8,11 +8,20 @@
                 </md-card-title-text>
             </md-card-title>
             <md-card-actions layout="row" layout-align="center center">
-                <md-button aria-label="Pesquisar" flex="50" ng-click="openSearch()">
+                <md-button aria-label="Perfil" flex="50" ng-href="/login" ng-if="!user.roleUser">
+                    <md-icon md-svg-icon="login"></md-icon>
+                    <span>Entrar</span>
+                </md-button>
+                <md-button aria-label="Perfil" flex="50" ng-href="/register" ng-if="!user.roleUser">
+                    <md-icon md-svg-icon="account-plus"></md-icon>
+                    <span>Registrar</span>
+                </md-button>
+
+                <md-button aria-label="Pesquisar" flex="50" ng-click="openSearch()" ng-if="user.roleUser">
                     <md-icon md-svg-icon="magnify"></md-icon>
                     <span>Pesquisar</span>
                 </md-button>
-                <md-button aria-label="Perfil" flex="50" ng-href="/profile">
+                <md-button aria-label="Perfil" flex="50" ng-href="/profile" ng-if="user.roleUser">
                     <md-icon md-svg-icon="account-check"></md-icon>
                     <span>Perfil</span>
                 </md-button>
@@ -20,7 +29,7 @@
         </md-card>
     </div>
 
-    <div flex-xs flex-gt-xs="50" layout="column" class="light-padding">
+    <div flex-xs flex-gt-xs="50" layout="column" class="light-padding" ng-if="user.roleUser">
         <md-card style="min-width: 95%;">
             <md-card-title>
                 <md-card-title-text>

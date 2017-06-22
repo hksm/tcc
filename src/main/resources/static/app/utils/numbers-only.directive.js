@@ -32,6 +32,18 @@
 					modelCtrl.$setViewValue(transformedInput);
 					modelCtrl.$render();
 					return transformedInput;
+				}, function(value) {
+					modelCtrl.$viewValue = value;
+					modelCtrl.$render();
+					return value.replace(/,/g, '.');
+				});
+
+				modelCtrl.$formatter.unshift(function(value) {
+					return value.replace('.', ',');
+				});
+
+				element.on('change', function(value) {
+					return value.replace('.', ',');
 				});
 
 				element.on('blur', function() {
