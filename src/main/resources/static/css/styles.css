@@ -462,3 +462,25 @@ md-toolbar .sidebar-brand {
     max-width: 50%;
     margin: auto;
 }
+
+@keyframes nodeInserted {  
+    from { opacity: 0.99; }
+    to { opacity: 1; }  
+}
+@-webkit-keyframes nodeInserted {  
+    from { opacity: 0.99; }
+    to { opacity: 1; }  
+}
+@-moz-keyframes nodeInserted {  
+    from { opacity: 0.99; }
+    to { opacity: 1; }  
+}
+@-o-keyframes nodeInserted {  
+    from { opacity: 0.99; }
+    to { opacity: 1; }  
+}
+
+img-crop {
+    animation-duration: 0.001s;
+    animation-name: nodeInserted;
+}

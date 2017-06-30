@@ -1,5 +1,6 @@
 package io.github.hksm.controller;
 
+import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import io.github.hksm.entity.Notification;
 import io.github.hksm.entity.QNotification;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Collections;
-import java.util.Optional;
+import java.util.Objects;
 import java.util.stream.StreamSupport;
 
 /**
@@ -34,23 +35,30 @@ public class NotificationController {
 
     @GetMapping
     public ResponseEntity<?> getLastFive(HttpServletRequest request) {
-        Optional<UserData> currentUser = userDataRepository.findByUsername(AuthUtils.getLoggedUsername(request.getHeader("Authorization").substring(7)));
-        if (!currentUser.isPresent()) {
+        if (Strings.isNullOrEmpty(request.getHeader("Authorization"))) {
+            return ResponseEntity.noContent().build();
+        }
+
+        UserData currentUser = userDataRepository.findOne(QUserData.userData.username.eq(AuthUtils.getLoggedUsername(request.getHeader("Authorization").substring(7))));
+        if (Objects.isNull(currentUser)) {
             return ResponseEntity.ok(Collections.emptyList());
         }
         Iterable<Notification> notifications = notificationRepository.findAll(QNotification.notification.dispensed.isFalse()
-                .and(QNotification.notification.userData.id.eq(currentUser.get().getId())), new Sort(Sort.Direction.DESC, "id"));
+                .and(QNotification.notification.userData.id.eq(currentUser.getId())), new Sort(Sort.Direction.DESC, "id"));
         return ResponseEntity.ok(Lists.newArrayList(notifications));
     }
 
     @GetMapping("/count")
     public ResponseEntity<?> count(HttpServletRequest request) {
-        Optional<UserData> currentUser = userDataRepository.findByUsername(AuthUtils.getLoggedUsername(request.getHeader("Authorization").substring(7)));
-        if (!currentUser.isPresent()) {
+        if (Strings.isNullOrEmpty(request.getHeader("Authorization"))) {
+            return ResponseEntity.noContent().build();
+        }
+        UserData currentUser = userDataRepository.findOne(QUserData.userData.username.eq(AuthUtils.getLoggedUsername(request.getHeader("Authorization").substring(7))));
+        if (Objects.isNull(currentUser)) {
             return ResponseEntity.ok(0);
         }
         long count = notificationRepository.count(QNotification.notification.dispensed.isFalse()
-                .and(QNotification.notification.userData.id.eq(currentUser.get().getId())));
+                .and(QNotification.notification.userData.id.eq(currentUser.getId())));
         return ResponseEntity.ok(count);
     }
 

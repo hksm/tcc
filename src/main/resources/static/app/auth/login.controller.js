@@ -43,7 +43,8 @@
 					$location.path('/');
 				});
 			}, function() {
-				$mdToast.show($mdToast.simple().textContent("Usuário ou senha inválido").position('top right'));
+				$mdToast.show($mdToast.simple().textContent('Usuário ou senha inválido').position('top right'));
+				window.scroll(0,0);
 			});
 		}
 

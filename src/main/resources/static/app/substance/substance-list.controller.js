@@ -64,8 +64,10 @@
 				$q.all(substance.map(s => SubstanceService.remove(s.id))).then(function() {
 					$mdToast.show($mdToast.simple().textContent((substance.length === 1 ? 'Substância removida' : 'Substâncias removidas ') + ' com sucesso').position('top right'));
 					loadPage();
+					window.scroll(0,0);
 				}, function() {
 					$mdToast.show($mdToast.simple().textContent('Erro na remoção da substância "' + '' + '"').position('top right'));
+					window.scroll(0,0);
 				});
 				
 			});

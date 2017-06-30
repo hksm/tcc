@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Base64;
 import java.util.Objects;
 
 /**
@@ -28,6 +29,9 @@ public class ImageController {
             return ResponseEntity.noContent().build();
         }
         try {
+            if (Base64.getEncoder().encodeToString(file.getBytes()).equals("iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAYAAACtWK6eAAAAsUlEQVR4nO3BAQEAAACCIP+vbkhAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB8GXHmAAFMgHIEAAAAAElFTkSuQmCC")) {
+                return ResponseEntity.noContent().build();
+            }
             Image image = new Image(null, file.getOriginalFilename(), file.getContentType(), file.getBytes());
             Image persisted = imageRepositoy.save(image);
             if (Objects.nonNull(persisted)) {

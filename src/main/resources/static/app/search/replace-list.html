@@ -45,10 +45,14 @@
                 </div>
                 <div class="md-list-item-text" layout="column" flex>
                     <md-chips class="small-chips" ng-model="vm.mainFood.relatedFood" readonly="true">
-                        <md-chip-template>{{ $chip.name }}</md-chip-template>
+                        <md-chip-template>
+                            {{ $chip.name }}
+                        </md-chip-template>
                     </md-chips>
                     <md-chips class="small-chips" ng-model="vm.mainFood.containedSubstances" readonly="true">
-                        <md-chip-template>{{ $chip.name }}</md-chip-template>
+                        <md-chip-template>
+                            {{ $chip.name }}
+                        </md-chip-template>
                     </md-chips>
                 </div>
                 <md-icon md-svg-icon="star" class="md-secondary" ng-click="vm.favoriteAction({ first: vm.mainFood, fourth: vm.mainFoodFavoriteId })" md-colors="{fill: 'amber'}" ng-if="vm.mainFoodFavoriteId"></md-icon>
@@ -113,11 +117,21 @@
                     </ng-md-icon>
                 </div>
                 <div class="md-list-item-text" layout="column" flex>
-                    <md-chips class="small-chips" ng-model="item.first.relatedFood" readonly="true">
-                        <md-chip-template>{{ $chip.name }}</md-chip-template>
+                    <md-chips class="small-chips" ng-model="item.relatedFoodChips" readonly="true">
+                        <md-chip-template>
+                            {{ $chip.name }}
+                            <md-tooltip ng-if="$chip.name === '...'" md-direction="top" md-z-index="1000">
+                                {{vm.parseHiddenChips(item.relatedFoodHidden)}}
+                            </md-tooltip>
+                        </md-chip-template>
                     </md-chips>
-                    <md-chips class="small-chips" ng-model="item.first.containedSubstances" readonly="true">
-                        <md-chip-template>{{ $chip.name }}</md-chip-template>
+                    <md-chips class="small-chips" ng-model="item.containedSubstancesChips" readonly="true">
+                        <md-chip-template>
+                            {{ $chip.name }}
+                            <md-tooltip ng-if="$chip.name === '...'" md-direction="top" md-z-index="1000">
+                                {{vm.parseHiddenChips(item.containedSubstancesHidden)}}
+                            </md-tooltip>
+                        </md-chip-template>
                     </md-chips>
                 </div>
                 <ng-md-icon icon="star" class="md-secondary" ng-click="vm.favoriteAction(item)" md-colors="{fill: 'amber'}"></ng-md-icon>

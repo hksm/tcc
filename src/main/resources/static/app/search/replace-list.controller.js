@@ -12,6 +12,7 @@
 		vm.formatOtherNames = formatOtherNames;
 		vm.loadReplacements = loadReplacements;
 		vm.favoriteAction = favoriteAction;
+		vm.parseHiddenChips = parseHiddenChips;
 
 		vm.categories = [];
 		vm.units = [];
@@ -19,6 +20,8 @@
 		(function init() {
 			loadEnums();
 			if (foodRequest && foodRequest.data) {
+				foodRequest.data.relatedFood = foodRequest.data.relatedFood.slice(0, 5);
+				foodRequest.data.containedSubstances = foodRequest.data.containedSubstances.slice(0, 5);
 				vm.mainFood = foodRequest.data;
 				FavoriteService.getOne(foodRequest.data.id).then(function(response) {
 					if (response.data) {
@@ -45,6 +48,19 @@
 				if (response.data) {
 					response.data.sort((a,b) => a.second > b.second ? -1 : 1);
 				}
+				response.data.forEach(function(item) {
+					item.relatedFoodChips = item.first.relatedFood.slice(0, 5);
+					item.relatedFoodHidden = item.first.relatedFood.slice(5);
+					if (item.relatedFoodHidden.length) {
+						item.relatedFoodChips.push({name: '...'});
+					}
+					item.containedSubstancesChips = item.first.containedSubstances.slice(0, 5);
+					item.containedSubstancesHidden = item.first.containedSubstances.slice(5);
+					if (item.containedSubstancesHidden.length) {
+						item.containedSubstancesChips.push({name: '...'});
+					}
+					
+				});
 				vm.results = response.data;
 			});
 		}
@@ -66,6 +82,10 @@
 					vm.mainFoodFavoriteId = response.data.id;
 				}
 			});
+		}
+
+		function parseHiddenChips(arr) {
+			return arr.map(e => e.name).join(', ');
 		}
 
 	}

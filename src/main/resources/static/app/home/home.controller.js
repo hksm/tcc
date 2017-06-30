@@ -20,7 +20,6 @@
 		function loadFavorites() {
 			FavoriteService.getAll().then(function(response) {
 				vm.favorites = response.data.content;
-				console.log(vm.favorites);
 			});
 		}
 

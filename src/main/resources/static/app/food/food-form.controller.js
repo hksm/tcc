@@ -17,7 +17,23 @@
 
 		vm.categories = [];
 
-		$scope.$watch('picFile', a => console.log(a));
+		$scope.$watch('picFile', a => {
+			if (a === undefined) return; // watch for rolling rocks
+
+			var el = document.getElementsByTagName('img-crop')[0]; // hopefully only one of these in the page
+
+			if (!el.getAttribute('style')) {
+				// is first run. no style attr. add
+				el.setAttribute('style', `
+					background: url('/api/images/${vm.food.imageId}');
+					background-size: 250px 250px;
+				`);
+			} else {
+				// 2nd run... clear attr (could also add a boolean outside scope but i think this looks nicer...)
+				el.setAttribute('style', '');
+			}
+			//.getAttribute('style')
+		});
 
 		(function init() {
 			loadEnums();
@@ -69,6 +85,7 @@
 				FoodService.save(food).then(function(response) {
 					if (response.status === 200 || response.status === 204) {
 						$mdToast.show($mdToast.simple().textContent("Alimento salvo com sucesso").position('top right'));
+						window.scroll(0,0);
 						if (remain) {
 							cleanForm(form);
 							$focus('nameInput');
@@ -77,9 +94,11 @@
 						}
 					} else {
 						$mdToast.show($mdToast.simple().textContent("Ocorreu um erro ao salvar o alimento").position('top right'));
+						window.scroll(0,0);
 					}
 				}, function() {
 					$mdToast.show($mdToast.simple().textContent("Ocorreu um erro ao salvar o alimento").position('top right'));
+					window.scroll(0,0);
 				});
 			}); 
 		}

@@ -63,9 +63,11 @@
 			$mdDialog.show(confirm).then(function() {
 				$q.all(food.map(f => FoodService.remove(f.id))).then(function() {
 					$mdToast.show($mdToast.simple().textContent((food.length === 1 ? 'Alimento removido' : 'Alimentos removidos ') + ' com sucesso').position('top right'));
+					window.scroll(0,0);
 					loadPage();
 				}, function() {
 					$mdToast.show($mdToast.simple().textContent('Erro na remoção do alimento "' + '' + '"').position('top right'));
+					window.scroll(0,0);
 				});
 				
 			});

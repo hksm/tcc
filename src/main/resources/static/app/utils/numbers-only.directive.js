@@ -38,7 +38,7 @@
 					return value.replace(/,/g, '.');
 				});
 
-				modelCtrl.$formatter.unshift(function(value) {
+				modelCtrl.$formatters.unshift(function(value) {
 					return value.replace('.', ',');
 				});
 

@@ -132,7 +132,7 @@ public class Substance {
                 .put("name", QSubstance.substance.name)
                 .put("otherNames", QSubstance.substance.otherNames.any())
                 .put("containedInFood.name", QSubstance.substance.containedInFood.any().name)
-                .put("alergenic", QSubstance.substance)
+                .put("alergenic", QSubstance.substance.isAlergenic)
                 .build();
 
     }

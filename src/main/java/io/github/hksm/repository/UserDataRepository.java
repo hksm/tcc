@@ -11,6 +11,4 @@ import java.util.Optional;
  */
 public interface UserDataRepository extends CrudRepository<UserData, Long>, QueryDslPredicateExecutor<UserData> {
 
-    Optional<UserData> findByUsername(String username);
-
 }

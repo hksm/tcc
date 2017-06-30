@@ -53,6 +53,7 @@
 			return SubstanceService.save(substance).then(function(response) {
 				if (response.status >= 200 && response.status < 300) {
 					$mdToast.show($mdToast.simple().textContent("Substância salva com sucesso").position('top right'));
+					window.scroll(0,0);
 					if (remain) {
 						cleanForm(form);
 						$focus('nameInput');
@@ -61,9 +62,11 @@
 					}
 				} else {
 					$mdToast.show($mdToast.simple().textContent("Ocorreu um erro ao salvar a substância").position('top right'));
+					window.scroll(0,0);
 				}
 			}, function() {
 				$mdToast.show($mdToast.simple().textContent("Ocorreu um erro ao salvar a substância").position('top right'));
+				window.scroll(0,0);
 			});
 		}
 

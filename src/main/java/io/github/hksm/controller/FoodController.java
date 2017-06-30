@@ -5,6 +5,7 @@ import com.github.vineey.rql.querydsl.sort.OrderSpecifierList;
 import com.github.vineey.rql.querydsl.sort.QuerydslSortContext;
 import com.github.vineey.rql.sort.parser.DefaultSortParser;
 import com.github.vineey.rql.sort.parser.exception.SortParsingException;
+import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import com.mysema.commons.lang.Pair;
 import com.querydsl.core.types.Predicate;
@@ -89,6 +90,10 @@ public class FoodController {
 
     @GetMapping("/search")
     public ResponseEntity<?> searchByTerm(@RequestParam(name="term", defaultValue="") String term, HttpServletRequest request) {
+        if (Strings.isNullOrEmpty(request.getHeader("Authorization"))) {
+            return ResponseEntity.noContent().build();
+        }
+
         StringExpression expression = Expressions.asString("%").concat(term).concat("%");
         Predicate predicate = QFood.food.name.likeIgnoreCase(expression)
                 .or(QFood.food.otherNames.any().likeIgnoreCase(expression))

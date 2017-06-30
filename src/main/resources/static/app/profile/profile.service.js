@@ -4,9 +4,9 @@
 
 	angular.module('tcc').factory('ProfileService', Factory);
 
-	Factory.$inject = ['BASE_URL', '$http', 'AuthService', '$rootScope'];
+	Factory.$inject = ['BASE_URL', '$http', 'AuthService', '$rootScope', '$q'];
 
-	function Factory(BASE_URL, $http, AuthService, $rootScope) {
+	function Factory(BASE_URL, $http, AuthService, $rootScope, $q) {
 		var service = {
             save: save,
             get: get
@@ -17,6 +17,9 @@
         }
 
         function get() {
+            if (!$rootScope.user.username || !$rootScope.user.username) {
+                return $q.when({});
+            } 
             return $http.get(BASE_URL + '/profile/' + $rootScope.user.username);
         }
 

@@ -1,6 +1,7 @@
 package io.github.hksm.controller;
 
 import com.google.common.collect.ImmutableSet;
+import io.github.hksm.entity.QUserData;
 import io.github.hksm.entity.UserData;
 import io.github.hksm.repository.UserDataRepository;
 import io.jsonwebtoken.Claims;
@@ -15,7 +16,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
+import java.util.Objects;
 
 /**
  * @author Marcos H. Henkes
@@ -34,14 +35,13 @@ public class AuthController {
         if (login.username == null || login.password == null) {
             throw new ServletException("Invalid login");
         }
-
-        Optional<UserData> userData = userDataRepository.findByUsername(login.username);
-        if (!userData.isPresent() || !BCrypt.checkpw(login.password, userData.get().getPassword())) {
+        UserData userData = userDataRepository.findOne(QUserData.userData.username.eq(login.username));
+        if (Objects.isNull(userData) || !BCrypt.checkpw(login.password, userData.getPassword())) {
             throw new ServletException("Invalid login");
         }
 
         return new LoginResponse(Jwts.builder().setSubject(login.username)
-                .claim("roles", userData.get().getRoles()).setIssuedAt(new Date())
+                .claim("roles", userData.getRoles()).setIssuedAt(new Date())
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY).compact());
     }
 
